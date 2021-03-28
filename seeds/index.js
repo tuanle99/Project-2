@@ -4,9 +4,10 @@
 
     // Import all the seed data functions created in this directory
     const seedUser = require('./user-seeds');
+    const seedProject = require('./project-seeds')
     const seedTask = require('./task-seeds');
     const seedComment = require('./comment-seeds')
-    const seedProject = require('./project-seeds')
+    
     
     
     // Import the database connection instance from connection / config
@@ -24,14 +25,14 @@
         await seedUser();
         console.log('\n----- USERS SEEDED -----\n');
 
+        await seedProject();
+        console.log('\n----- PROJECTS SEEDED -----\n');
+
         await seedTask();
         console.log('\n----- TASKS SEEDED -----\n');
 
         await seedComment();
         console.log('\n----- COMMENTS SEEDED -----\n');
-
-        await seedProject();
-        console.log('\n----- PROJECTS SEEDED -----\n');
 
         process.exit(0);
   };

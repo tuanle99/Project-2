@@ -11,8 +11,8 @@
     const commentData = [
         {
             comment: 'Comment from user 1 on task 1',
-            user_id: 2,
-            task_id: 2
+            user_id: 1,
+            task_id: 1
         },
         {
             comment: 'Comment from user 2 on task 2',

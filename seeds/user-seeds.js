@@ -27,7 +27,7 @@
         },
         {
             name: 'User3',
-            is_admin: true,
+            is_admin: false,
             role: 'Child',
             email: 'user3@child1.com',
             birthday: '11/01/2021',
