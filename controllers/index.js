@@ -1,9 +1,19 @@
-const router = require('express').Router();
+/* -------------------------------------------------------------------------- */
+/*                             Import Dependencies                            */
+/* -------------------------------------------------------------------------- */
+    const router = require('express').Router();
+    const apiRoutes = require('./api');
+    const homeRoutes = require('./homeRoutes');
 
-const apiRoutes = require('./api');
-const homeRoutes = require('./homeRoutes');
+/* -------------------------------------------------------------------------- */
+/*                       Define Middleware For This Path                      */
+/* -------------------------------------------------------------------------- */
 
-router.use('/', homeRoutes);
-router.use('/api', apiRoutes);
+    router.use('/', homeRoutes);
+    router.use('/api', apiRoutes);
 
-module.exports = router;
+/* -------------------------------------------------------------------------- */
+/*                  Export Router Module for Use in ServerJS                  */
+/* -------------------------------------------------------------------------- */
+
+    module.exports = router;

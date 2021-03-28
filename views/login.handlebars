@@ -1,42 +1,39 @@
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
+<!--Existing User Login-->
+<div class="container">
 
-    <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
-      </div>
-      <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
+    <!--Existing User Login-->
+    <div class="row mt-5">
+        <div class="card px-0 shadow">
+            <h5 class="card-header bg-dark text-white">Current User Login</h5>
+            <div class="card-body">
+                <form>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input id="inputEmail" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input id="inputPassword" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button id="log-in-button" type="submit" class="btn btn-info">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
-      </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
-  </div>
+    <!--Prompt for New User Sign Up-->
+    <div class="row mb-3 text-center fs-5 mt-5">
+        <p> If you are not an existing user, <a href="/api/users/signup" style="color: #0dcaf0;" class="fw-bold">please
+                click here to sign up!</a> </p>
+    </div>
+
 </div>
 
-<script src="./js/login.js"></script>
+<!--Script for login-->
+<script src="/js/login.js"></script>
