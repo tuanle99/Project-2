@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS project_db;
-CREATE DATABASE project_db;
+DROP DATABASE IF EXISTS fammanager_db;
+CREATE DATABASE fammanager_db;
