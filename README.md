@@ -11,6 +11,32 @@ Family Manager
 - Finance
     - montly spending
     - subscription
+
+    `Product`
+
+  * `id`
+  
+    * Integer.
+  
+    * Doesn't allow null values.
+  
+    * Set as primary key.
+  
+    * Uses auto increment.
+
+  * `Subscription`
+  
+    * Integer.
+  
+    * Doesn't allow null values.
+
+  * `Bonus`
+  
+    * integer.
+  
+    * Doesn't allow null values.
+  
+
 - Project
     - View a section of the to do list base on the project category
 
