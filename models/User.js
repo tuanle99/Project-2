@@ -20,8 +20,12 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    admin: {
+    is_admin: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    role: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {

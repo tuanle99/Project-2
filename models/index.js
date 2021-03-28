@@ -1,6 +1,7 @@
 const User = require('./User');
 const Task = require('./Task');
 const Project = require('./Project');
+const Comment = require('./Comment');
 
 // Need to define model relationships
 
@@ -32,5 +33,15 @@ Task.belongsTo(Project, {
     foreignKey: 'project_id'
 });
 
+// Comment/Task relationships
+Task.hasMany(Comment, {
+    foreignKey: 'task_id',
+    onDelete: 'CASCADE'
+});
+
+Comment.belongsTo(Task, {
+    foreignKey: 'task_id'
+});
+
 // Export for use in controllers
-module.exports = { User, Task, Project };
+module.exports = { User, Task, Project, Comment };

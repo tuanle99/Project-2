@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Project extends Model { }
+class Project extends Model {}
 
 Project.init(
     {
@@ -19,13 +19,6 @@ Project.init(
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
-        },
-        task_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'task',
-                key: 'id',
-            },
         },
     },
     {
