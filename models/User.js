@@ -22,7 +22,8 @@ User.init(
     },
     is_admin: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false,
     },
     role: {
       type: DataTypes.STRING,

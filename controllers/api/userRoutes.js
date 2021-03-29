@@ -44,8 +44,9 @@ router.get('/signup', async (req, res) => {
     // Body Example:
     /*
         {
-            "email": "email1@email.com",
-            "user_name": "username1",
+            "name": "Name",
+            "role": "Parent",
+            "email": "email1@email.com"
             "password": "password2"
         }
     */
