@@ -1,5 +1,44 @@
-<div class="row">
-  <div class="col-auto">
-    <h2>Welcome, {{name}}!</h2>
+<div class="profile_wrap">
+  <div class="fluid-container profile_container">
+    <div class="profile_title profile_background">
+      <h2>Welcome, {{current_user.dataValues.name}} !</h2>
+    </div>
+    <div class="profile_titleContainer">
+      <h4>Family Member</h4>
+    </div>
+    {{#each users as |user|}}
+    {{!-- get all family member except for the user themselves --}}
+    {{#if_not_eq user.dataValues.name current_user.dataValues.name}}
+    <div class="row">
+      <div class="col-6">
+        <p>{{user.dataValues.role}}: {{user.dataValues.name}}
+          {{#if_not_eq user.dataValues.is_admin 0}}
+          (admin)
+          {{/if_not_eq}}
+        </p>
+      </div>
+    </div>
+    {{/if_not_eq}}
+    {{/each}}
+    <div class="profile_background">
+      <div class="profile_titleContainer">
+        <h4>Current Task:</h4>
+      </div>
+      {{#each tasks as |task|}}
+      <div class="row">
+        <div class="col-6 ">
+          <h5>{{task.dataValues.title}}</h5>
+        </div>
+        <div class="col-6 profile_alignText">
+          <p>Assigned by {{task.user.dataValues.name}} on {{format_date task.dataValues.due_date}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <p>{{task.dataValues.description}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
   </div>
 </div>
