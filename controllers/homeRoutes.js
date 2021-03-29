@@ -32,14 +32,21 @@ const { User, Task, Project, Comment } = require("../models");
                 }
             ],
         });
+
+        // Get the user data so I can populate the new task assignee selections
+        const userData = await User.findAll();
         
         // Serialize data so the template can read it
         const tasks = taskData.map((task) => task.get({plain : true}));
           console.log(tasks);
+
+        const users = userData.map((user) => user.get({plain:true}));
+          console.log(users)
         
         // Pass serialized data and session flag into db
         res.render('homepage', {
             tasks,
+            users,
             logged_in: req.session.logged_in
         });
     }
