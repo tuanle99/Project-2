@@ -2,7 +2,7 @@
 /* -------------------------------------------------------------------------- */
 /*                             Import Dependencies                            */
 /* -------------------------------------------------------------------------- */const router = require("express").Router();
-const { Project, User, Task } = require("../models");
+const { User, Task, Project, Comment } = require("../models");
 // const withAuth = require("../utils/auth");
 
 /* -------------------------------------------------------------------------- */
@@ -18,25 +18,25 @@ const { Project, User, Task } = require("../models");
    router.get('/', async (req, res) => {
         
     try{
-
         // Get the data from the blogs DB
         const taskData = await Task.findAll({
             include: [
                 {
-                    model: Task,
+                    model: User
                 },
-                /*
                 {
-                    model: Comment,
+                  model: Project
                 },
-                */
-               
+                {
+                  model: Comment
+                }
             ],
         });
         
         // Serialize data so the template can read it
         const tasks = taskData.map((task) => task.get({plain : true}));
-
+          console.log(tasks);
+        
         // Pass serialized data and session flag into db
         res.render('homepage', {
             tasks,
@@ -49,24 +49,24 @@ const { Project, User, Task } = require("../models");
 })
 
 /*
-// Use withAuth middleware to prevent access to route
-router.get("/profile", withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ["password"] },
-    });
+  // Use withAuth middleware to prevent access to route
+  router.get("/profile", withAuth, async (req, res) => {
+    try {
+      // Find the logged in user based on the session ID
+      const userData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ["password"] },
+      });
 
-    const user = userData.get({ plain: true });
+      const user = userData.get({ plain: true });
 
-    res.render("profile", {
-      ...user,
-      logged_in: true,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+      res.render("profile", {
+        ...user,
+        logged_in: true,
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 */
 
 router.get("/login", (req, res) => {

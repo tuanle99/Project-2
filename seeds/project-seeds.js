@@ -11,12 +11,15 @@ const Project = require('../models/Project');
     const projectData = [
         {
             title: 'Project 1 Title',
+            user_id: 1
         },
         {
             title: 'Project 2 Title',
+            user_id: 2
         },
         {
             title: 'Project 3 Title',
+            user_id: 3
         }
     ];
 

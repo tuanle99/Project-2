@@ -61,7 +61,7 @@
 
     <div class="container">
 
-        <!--STATIC TASK HEADER ROW-->
+        <!--STATIC TASK HEADER ROW- DONT TOUCH THESE THEY ARE STATIC!-->
         <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
             <div class="col-md-2 d-flex justify-content-center ">
                 <span>
@@ -85,40 +85,51 @@
             </div>
         </div>
 
+
         <!--DYNAMIC TASK ROW-->
+        {{#each tasks as |task|}}
+
         <div class="row align-items-center shadow-sm my-2">
             <div class="col-md-1 d-flex justify-content-center ">
                 <button type="button" class="btn btn-sm btn-outline-info my-3" data-bs-toggle="collapse"
-                    data-bs-target="#InsertDynamicDetailsID2" aria-expanded="false">
+                    data-bs-target="#ids{{task.id}}" aria-expanded="false">
                     Details
                 </button>
             </div>
             <div class="col-md-1 px-1 d-flex justify-content-center">
-                <button type="button" class="btn btn-sm btn-success my-3"><i class="fas fa-check tex"></i></button>
+                <button type="button" class="btn btn-sm  btn-outline-success my-3" data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <input type="text" id="DYNAMIC" class="form-control">
+                <input type="text" id={{task.id}} class="form-control" value="{{task.title}}">
             </div>
             <div class="col-md-2 d-flex justify-content-center">
                 <span class="text-center d-flex justify-content-center">
-                    DUE
+                    {{format_date task.due_date}}
                 </span>
             </div>
-            <div class="col-md-2 ">
+            <div class="col-md-2">
                 <span>
-                    Assignee
+                    {{task.user.name}}
                 </span>
             </div>
         </div>
         <!--Collapsable Details View (collapsed via details button)-->
-        <div class="collapse" id="InsertDynamicDetailsID2">
-            <div class="card mt-1 p-0" id="DYNAMICID">
+        <div class="collapse" id="ids{{task.id}}">
+            <div class="card mt-1 p-0">
                 <div class="card-body">
                     <h5 class="card-title">Description</h5>
-                    <p class="card-text">Task description entered upon creation.....</p>
+                    <p class="card-text">"{{task.description}}"</p>
+                    <h5 class="card-title">Comments</h5>
+                    <ul>
+                        {{#each task.comments as |comment|}}
+                        <li>{{comment.comment}} -- User {{comment.user_id}}</li>
+                        {{/each}}
+                    </ul>
                 </div>
             </div>
         </div>
+
+        {{/each}}
 
 
     </div>

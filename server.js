@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
+const helpers = require('./utils/helpers') // This is where we define helper functoins for handlebars
 
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -11,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Set up Handlebars.js
-const hbs = exphbs.create();
+const hbs = exphbs.create({helpers}); // This is where I reference my helper.js I required above, to use helper functions defined in helper.js
 
 const sess = {
   secret: 'Super secret secret',
