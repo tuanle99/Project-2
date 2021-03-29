@@ -87,10 +87,10 @@
                 </button>
             </div>
             <div class="col-md-1 px-1 d-flex justify-content-center">
-                <button type="button" class="btn btn-sm  btn-outline-success my-3" data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
+                <button type="button" class="btn set-complete-incomplete btn-sm btn-outline-success my-3" data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <input type="text" id={{task.id}} class="form-control" value="{{task.title}}">
+                <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
             </div>
             <div class="col-md-2 d-flex justify-content-center">
                 <span class="text-center d-flex justify-content-center">

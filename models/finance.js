@@ -1,10 +1,10 @@
+
+/*
 const { Model, DataTypes } = require('sequelize');
-
 const sequelize = require('../config/connection.js');
+class Finance extends Model {}
 
-class Tag extends Model {}
-
-Tag.init(
+Finance.init(
   {
     // define finance and subscription columns
     id: {
@@ -13,7 +13,7 @@ Tag.init(
       primaryKey: true,
       autoIncrement: true
     },
-    tag_name: {
+    subscriptions: {
       type: DataTypes.STRING,
     },
   },
@@ -26,4 +26,5 @@ Tag.init(
   }
 );
 
-module.exports = finance;
+module.exports = Finance;
+*/
