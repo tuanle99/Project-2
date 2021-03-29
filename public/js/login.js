@@ -1,10 +1,16 @@
+/* -------------------------------------------------------------------------- */
+/*                          Define Handler Functions                          */
+/* -------------------------------------------------------------------------- */
+
 const loginFormHandler = async (event) => {
+
   event.preventDefault();
 
   // Collect values from the login form
-  const email = document.querySelector('#email-login').value.trim();
-  const password = document.querySelector('#password-login').value.trim();
+  const email = document.querySelector('#inputEmail').value.trim();
+  const password = document.querySelector('#inputPassword').value.trim();
 
+  // Execute login logic
   if (email && password) {
     // Send a POST request to the API endpoint
     const response = await fetch('/api/users/login', {
@@ -14,40 +20,23 @@ const loginFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace('/profile');
-    } else {
-      alert(response.statusText);
+      // If successful, redirect the browser to the profile page and notify them they are signed in
+      alert(`Sign in successful. Welcome!`);
+      document.location.replace('/');
+    } 
+    else {
+      alert(`${response.statusText} \n Please make sure you have entered the correct crendentials. If you have not signed up before, please use the link provided below the signin window to register.`);
     }
   }
 };
+         
 
-const signupFormHandler = async (event) => {
-  event.preventDefault();
-
-  const name = document.querySelector('#name-signup').value.trim();
-  const email = document.querySelector('#email-signup').value.trim();
-  const password = document.querySelector('#password-signup').value.trim();
-
-  if (name && email && password) {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify({ name, email, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert(response.statusText);
-    }
-  }
-};
+/* -------------------------------------------------------------------------- */
+/*                            Define Event Handlers                           */
+/* -------------------------------------------------------------------------- */
 
 document
-  .querySelector('.login-form')
-  .addEventListener('submit', loginFormHandler);
-
-document
-  .querySelector('.signup-form')
-  .addEventListener('submit', signupFormHandler);
+  // get the button I gave the sign-up-button id and listen for a click
+  .querySelector('#log-in-button')
+  // when clicked, run the function I defined above to send info to server and get response
+  .addEventListener('click', loginFormHandler);
