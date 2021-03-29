@@ -1,0 +1,22 @@
+.profile_wrap {
+  width: 90%;
+  margin: auto;
+}
+.profile_title {
+  text-align: right;
+}
+.profile_container {
+  margin-top: 50px;
+}
+.profile_alignText {
+  text-align: right;
+}
+.profile_background {
+}
+.profile_titleContainer {
+  color: white;
+  background-color: black;
+  padding: 5px 5px 5px 10px;
+  border-radius: 50px;
+  margin: 15px 0px 15px 0px;
+}
