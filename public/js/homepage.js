@@ -1,8 +1,13 @@
+
 /* -------------------------------------------------------------------------- */
 /*                          Define Handler Functions                          */
 /* -------------------------------------------------------------------------- */
 
-/* ------------------------------ Post (Create) New Task ----------------------------- */
+/* --- Check Task Status and Set Class Accordingly (Each time page loads) --- */
+
+    // Add content that always checks  task status and sets or removes classes based on this
+
+/* ------------------------------ Create New Task (POST) ----------------------------- */
     // When post is clicked in modal, log information to create new blog
     const postNewTask = async(event) => {
 
@@ -80,11 +85,89 @@
         }
     };
 
-/* -------------------------------- Edit Task ------------------------------- */
-    
-/* ------------------------------- Delete Task ------------------------------ */
+/* -------------------- Mark Task Complete or Incomplete (PUT) -------------------- */
+    // When post is clicked in modal, log information to create new blog
+    const updateCompletionStatus = async(event) => {
 
-/* ------------------------------ Post Comments ------------------------------ */
+    // Prevent Default
+    event.preventDefault();
+
+    // Define Items to Get and Manipulate
+
+        // Get the button that was clicked
+        const checkmarkButton = event.currentTarget;
+            console.log(checkmarkButton)
+
+        // Get the task input field
+
+            // Traverse up one div
+            const checkmarkButtonDiv = checkmarkButton.parentElement;
+                console.log(checkmarkButtonDiv);
+
+            // Go down to next sibling div
+            const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+                console.log(taskInputDiv);
+
+            // Go down one child to the input (find the class below with what I specified)
+            const taskInputField = taskInputDiv.querySelector('.task-input-field');
+                console.log(taskInputField);
+
+        // Add the light green class to background
+        taskInputField.classList.add('bg-success-light');
+
+        // Set the button to solid green
+
+            // Remove outline class
+            checkmarkButton.classList.remove('btn-outline-success');
+            // Add solit class
+            checkmarkButton.classList.add('btn-success');
+        
+        // Set the input to light green
+        taskInputField.classList.add('bg-success', 'text-white');
+
+        
+
+    // Determine the current is_completed Status of the task by checking it's attribute
+    
+    // // If task is currently incomplete, set it to complte
+    // if () {
+
+    //     // Set its status attribute to completed
+
+    //     // Remove the button outline class
+
+    //     // Add the button solid class (make it solid green)
+
+    //     // Add a light green background class to the input
+
+    //     // Update the db with the change in task status
+    //     const response = await fetch('/newTask', {
+    //         method: 'PUT',
+    //         body: JSON.stringify({is_complete}),
+    //         headers: {
+    //             'Content-Type': 'application/JSON',
+    //         }
+    //     });
+    //     // If its an ok response refresh and load homepage again with new task
+    //     if (response.ok) {
+    //         document.location.replace('/');
+    //     }
+    //     // If it fails, notify them
+    //     else {
+    //         alert('Failed to update Task Status');
+    //     }
+    // }
+    // // If the task is currently completed, set it back to incomplete...
+    // else {
+    //     alert('Please ensure you have populated all required fields!');
+    // }
+};
+
+/* -------------------------------- Edit Task (PUT) ------------------------------- */
+    
+/* ------------------------------- Delete Task (DELETE) ------------------------------ */
+
+/* ------------------------------ Post Comments (POST) ------------------------------ */
 
     // When edit button is clicked, pull of modal with initial text populated (then re-use post) adding stuff
     /*
@@ -165,6 +248,15 @@
     
     // Add listner to "Create Task" Button that sits WITHIN the task modal
     document.querySelector('#create-new-task').addEventListener('click', postNewTask);
+
+/* -------------------- Mark Task Complete or Incomplete -------------------- */
+      // Define a variable that holds all instances of checkmark button
+      const checkmarkButtons= document.querySelectorAll('.set-complete-incomplete');
+
+      // Loop through this array of buttons and add an event listner to each of them to run edit blog function
+      checkmarkButtons.forEach(function(el) {
+          el.addEventListener('click', updateCompletionStatus)
+      })
      
 /* -------------------------------- Edit Blog ------------------------------- */
  
