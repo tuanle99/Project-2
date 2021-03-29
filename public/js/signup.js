@@ -9,14 +9,22 @@ const signUpFormHandler = async (event) => {
     event.preventDefault();
 
     // Collect values from the signup form
-    const email = document.querySelector("#inputNewEmail").value.trim();
-    const user_name = document.querySelector("#inputNewUserName").value.trim();
-    const password = document.querySelector("#inputNewPassword").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const name = document.querySelector("#name").value.trim();
+    const birthday = document.querySelector("#birthday").value.trim();
+    const role = document.querySelector("#role").value.trim();
+    const password = document.querySelector("#password").value.trim();
 
-    console.log("values captured as vairables are" + email + user_name + password)
+    // For dev, check I get inputs for all these before sending to server..
+    console.log(`Values captured for server are
+        ${email} \n
+        ${name} \n
+        ${birthday} \n
+        ${role} \n
+        ${password}`);
 
     // If there are values present for all when button was pressed...
-    if (email && password.length > 7 && user_name) {
+    if (email && name && birthday && role && password.length > 7) {
 
         // Send a POST request to the API endpoint
         const response = await fetch('/api/users/signup', {
