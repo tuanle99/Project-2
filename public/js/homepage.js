@@ -5,7 +5,48 @@
 
 /* --- Check Task Status and Set Class Accordingly (Each time page loads) --- */
 
-    // Add content that always checks  task status and sets or removes classes based on this
+    // When data is retrieved from DB, loop through all tasks and check completion status
+
+        // Define a variable that holds all instances of checkmark buttons (these keep data state)
+        const checkmarkButtons= document.querySelectorAll('.set-complete-incomplete');
+
+        // Loop through teh array and set approrpriate colors
+        checkmarkButtons.forEach(function(el) {
+
+            // Define checkmark button in this particular iteratoin
+            const checkmarkButton = el;
+                console.log(checkmarkButton)
+
+            // Get its associated task input field
+                // Traverse up one div
+                const checkmarkButtonDiv = checkmarkButton.parentElement;
+                    console.log(checkmarkButtonDiv);
+
+                // Go down to next sibling div
+                const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+                    console.log(taskInputDiv);
+
+                // Go down one child to the input (find the class below with what I specified)
+                const taskInputField = taskInputDiv.querySelector('.task-input-field');
+                    console.log(taskInputField);
+            
+              // Determine the current is_completed Status of the task by checking it's attribute
+              const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
+                console.log(currentCompleteStatus);
+            
+            // If task is currently complete already when it comes from the DB...
+            if (currentCompleteStatus==='true') {
+
+                // Set the button to solid green
+                    // Remove outline class
+                    checkmarkButton.classList.remove('btn-outline-success');
+                    // Add solit class
+                    checkmarkButton.classList.add('btn-success');
+                
+                // Set the input to light green
+                taskInputField.classList.add('bg-success', 'text-white');
+            };
+        });
 
 /* ------------------------------ Create New Task (POST) ----------------------------- */
     // When post is clicked in modal, log information to create new blog
@@ -274,7 +315,7 @@
 
 /* -------------------- Mark Task Complete or Incomplete -------------------- */
       // Define a variable that holds all instances of checkmark button
-      const checkmarkButtons= document.querySelectorAll('.set-complete-incomplete');
+        // This is done at top of script when I check if the come in from server
 
       // Loop through this array of buttons and add an event listner to each of them to run edit blog function
       checkmarkButtons.forEach(function(el) {

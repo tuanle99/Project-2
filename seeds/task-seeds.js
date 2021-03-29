@@ -23,7 +23,7 @@ const Task = require('../models/Task')
             description: 'Task 2 Description..',
             due_date: '02/02/2021',
             user_assigned_id: 2,
-            is_complete:0,
+            is_complete:1,
             created_by:2,
             project_id: 2
         },
