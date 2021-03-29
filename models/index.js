@@ -5,23 +5,25 @@ const Comment = require('./Comment');
 
 // Need to define model relationships
 
-// Project / User relationships
-User.hasMany(Project, {
-    foreignKey: 'user_id'
+// Task / User Relationship
+// Tasks / User relationships
+Task.belongsTo(User, {
+    foreignKey: 'user_assigned_id'
 });
 
+User.hasMany(Task, {
+    foreignKey: 'user_assigned_id'
+});
+
+// Project / User relationships
 Project.belongsTo(User, {
     foreign_key: 'user_id'
 });
 
-// Tasks / User relationships
-User.hasMany(Task, {
+User.hasMany(Project, {
     foreignKey: 'user_id'
 });
 
-Task.belongsTo(User, {
-    foreignKey: 'user_id'
-})
 
 // Project / Task relationships
 Project.hasMany(Task, {
@@ -34,14 +36,16 @@ Task.belongsTo(Project, {
 });
 
 // Comment/Task relationships
+Comment.belongsTo(Task, {
+    foreignKey: 'task_id'
+});
+
 Task.hasMany(Comment, {
     foreignKey: 'task_id',
     onDelete: 'CASCADE'
 });
 
-Comment.belongsTo(Task, {
-    foreignKey: 'task_id'
-});
+
 
 // Export for use in controllers
 module.exports = { User, Task, Project, Comment };

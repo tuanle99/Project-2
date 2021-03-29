@@ -4,6 +4,7 @@ const sequelize = require('../config/connection');
 class Task extends Model {}
 
 Task.init(
+    // Model Column and Details Layout
     {
         id: {
             type: DataTypes.INTEGER,
@@ -19,28 +20,33 @@ Task.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        due_date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        user_assigned_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'user',
+                key: 'id',
+            },
+        },
+        is_complete: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue:false
+        },
         date_created: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
-        due_date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
         created_by: {
             type: DataTypes.INTEGER,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
-        },
-        assigned_to: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
+            // references: {
+            //     model: 'user',
+            //     key: 'id',
+            // },
         },
         project_id: {
             type: DataTypes.INTEGER,
@@ -51,6 +57,8 @@ Task.init(
             },
         },
     },
+
+    // Model Options
     {
         sequelize,
         timestamps: false,
