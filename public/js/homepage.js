@@ -86,20 +86,20 @@
     };
 
 /* -------------------- Mark Task Complete or Incomplete (PUT) -------------------- */
+
     // When post is clicked in modal, log information to create new blog
     const updateCompletionStatus = async(event) => {
 
     // Prevent Default
     event.preventDefault();
 
-    // Define Items to Get and Manipulate
+    // Define Elements That Need to Be Manipulated or Read
 
         // Get the button that was clicked
         const checkmarkButton = event.currentTarget;
             console.log(checkmarkButton)
 
         // Get the task input field
-
             // Traverse up one div
             const checkmarkButtonDiv = checkmarkButton.parentElement;
                 console.log(checkmarkButtonDiv);
@@ -112,11 +112,18 @@
             const taskInputField = taskInputDiv.querySelector('.task-input-field');
                 console.log(taskInputField);
 
-        // Add the light green class to background
-        taskInputField.classList.add('bg-success-light');
+         // Get the id of the task of interest
+         const id = taskInputField.id;
+            console.log(`task id detected as ${id}`);
+
+    // Determine the current is_completed Status of the task by checking it's attribute
+            const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
+                console.log(currentCompleteStatus);
+    
+    // If task is currently incomplete, set it to complte
+    if (currentCompleteStatus==='false') {
 
         // Set the button to solid green
-
             // Remove outline class
             checkmarkButton.classList.remove('btn-outline-success');
             // Add solit class
@@ -125,42 +132,58 @@
         // Set the input to light green
         taskInputField.classList.add('bg-success', 'text-white');
 
-        
+        // Set its status attribute to completed
+        checkmarkButton.setAttribute('data-complete-state', 'true');
 
-    // Determine the current is_completed Status of the task by checking it's attribute
-    
-    // // If task is currently incomplete, set it to complte
-    // if () {
+        // // Update the db with the change in task status
+        // const response = await fetch('/updateTaskStatus', {
+        //     method: 'PUT',
+        //     body: JSON.stringify({is_complete, id}),
+        //     headers: {
+        //         'Content-Type': 'application/JSON',
+        //     }
+        // });
+        // // If its an ok response refresh and load homepage again with new task
+        // if (response.ok) {
+        //     document.location.replace('/');
+        // }
+        // // If it fails, notify them
+        // else {
+        //     alert('Failed to update Task Status');
+        // }
+    }
 
-    //     // Set its status attribute to completed
+    // If the task is currently completed, set it back to incomplete and make needed changes
+    else {
+        // Set the button to outline green
+            // Remove solid class
+            checkmarkButton.classList.remove('btn-success');
+            // Add the outline class
+            checkmarkButton.classList.add('btn-outline-success');
+            
+        // Remove green background and white text class
+        taskInputField.classList.remove('bg-success', 'text-white');
 
-    //     // Remove the button outline class
+        // Set its status attribute to incomplete again
+        checkmarkButton.setAttribute('data-complete-state', 'false');
 
-    //     // Add the button solid class (make it solid green)
-
-    //     // Add a light green background class to the input
-
-    //     // Update the db with the change in task status
-    //     const response = await fetch('/newTask', {
-    //         method: 'PUT',
-    //         body: JSON.stringify({is_complete}),
-    //         headers: {
-    //             'Content-Type': 'application/JSON',
-    //         }
-    //     });
-    //     // If its an ok response refresh and load homepage again with new task
-    //     if (response.ok) {
-    //         document.location.replace('/');
-    //     }
-    //     // If it fails, notify them
-    //     else {
-    //         alert('Failed to update Task Status');
-    //     }
-    // }
-    // // If the task is currently completed, set it back to incomplete...
-    // else {
-    //     alert('Please ensure you have populated all required fields!');
-    // }
+        // // Update the db with the change in task status
+        // const response = await fetch('/updateTaskStatus', {
+        //     method: 'PUT',
+        //     body: JSON.stringify({is_complete, id}),
+        //     headers: {
+        //         'Content-Type': 'application/JSON',
+        //     }
+        // });
+        // // If its an ok response refresh and load homepage again with new task
+        // if (response.ok) {
+        //     document.location.replace('/');
+        // }
+        // // If it fails, notify them
+        // else {
+        //     alert('Failed to update Task Status');
+        // }
+    }
 };
 
 /* -------------------------------- Edit Task (PUT) ------------------------------- */
