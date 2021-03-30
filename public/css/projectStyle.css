@@ -1,0 +1,18 @@
+.projectContainer {
+  margin-top: 20px;
+}
+.project_title_container {
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+.project_title_border {
+  border: 2px solid black;
+  border-radius: 50px;
+}
+.project_main_container {
+  margin-top: 50px;
+}
+.project_content_container {
+  margin-top: 20px;
+}
