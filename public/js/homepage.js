@@ -256,12 +256,16 @@
                 // Get the data attribute of the selected option within the options list
                 const user_assigned_id = latestAssigneeSelectElement.value.trim();
                     console.log(user_assigned_id);
+            
+                // Get the id for the task to delete
+                const task_id = editTaskModal.getAttribute('data-task-id');
+                    console.log (`Task id to update is set to > ${task_id}`);
                 
         // If content exists for all fields
         if (title &&  description && due_date && user_assigned_id) {
 
             // Post the information to the server at route newTask
-            const response = await fetch('/ENTERROUTE', {
+            const response = await fetch(`/ENTERROUTE/${task_id}`, {
                 method: 'PUT',
                 body: JSON.stringify({title, description, due_date, user_assigned_id}),
                 headers: {
