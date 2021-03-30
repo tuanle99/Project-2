@@ -261,7 +261,7 @@
         if (title &&  description && due_date && user_assigned_id) {
 
             // Post the information to the server at route newTask
-            const response = await fetch('/updatedTask', {
+            const response = await fetch('/ENTERROUTE', {
                 method: 'PUT',
                 body: JSON.stringify({title, description, due_date, user_assigned_id}),
                 headers: {
@@ -285,6 +285,53 @@
 
     
 /* ------------------------------- Delete Task (DELETE) ------------------------------ */
+
+     // When delete button is clicked, delete the task from the db
+     const deleteTask = async(event) => {
+
+        // Prevent Default
+        event.preventDefault();
+
+        // clear variables in case of loops not closed ever somehow
+        let deleteButton;
+        let task_id;
+        
+        // Get the id for the task on which the delete button was clicked
+
+            // Get the delete-id data attribute from this delete button
+
+                // Call out the button clicked
+                deleteButton= event.currentTarget
+                    console.log(deleteButton);
+                task_id = deleteButton.getAttribute('data-delete-id');
+                    console.log(task_id);
+                    
+            // delete the task by id
+            try {
+                // Post the information
+                const response = await fetch(`/ENTERROUTE/${task_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/JSON',
+                    }
+                });
+                // If its an ok response load the latest dash again
+                if (response.ok) {
+                    alert(`Task Deleted`);
+                    document.location.replace('/');
+                }
+                // If it fails, notify them
+                else {
+                    alert('Failed to Delete Task')
+                    return;
+                }
+            }
+            // If no content exists when posting, alert them to fill it out first
+            catch {
+                alert('Unable to delete task');
+            }
+            
+    };
 
 /* ------------------------------ Post Comments (POST) ------------------------------ */
 
@@ -369,6 +416,7 @@
     document.querySelector('#create-new-task').addEventListener('click', postNewTask);
 
 /* -------------------- Mark Task Complete or Incomplete -------------------- */
+
       // Define a variable that holds all instances of checkmark button
         // This is done at top of script when I check if the come in from server
 
@@ -377,7 +425,7 @@
           el.addEventListener('click', updateCompletionStatus)
       })
      
-/* -------------------------------- Edit Blog ------------------------------- */
+/* -------------------------------- Edit Task ------------------------------- */
  
     // Define a variable that holds all instances of Update Blog Buttons (within edit modals)
     const updateButtons = document.querySelectorAll('.update-task-button');
@@ -387,11 +435,17 @@
         el.addEventListener('click', updateTask)
     })
   
-/* ------------------------------- Delete Blog ------------------------------ */
+/* ------------------------------- Delete Task ------------------------------ */
 
-    // Not a priority but define here if needed
+    // Define a variable that holds all instances of buttons with class delete-task
+    const deleteTaskButtons = document.querySelectorAll('.delete-task');
 
-/* ------------------------------ Post Comment ------------------------------ */
+    // Loop through this array of buttons and add an event listner to each of them to run deleteTask function
+    deleteTaskButtons.forEach(function(el) {
+        el.addEventListener('click', deleteTask)
+    });
+
+/* ------------------------------ Post Task Comment ------------------------------ */
 /*
      // Define a variable that holds all instances of buttons with class delete-blog
      const taskCommentButtons = document.querySelectorAll('.ENTERCLASS');
