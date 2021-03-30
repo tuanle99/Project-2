@@ -2,6 +2,7 @@ const User = require('./User');
 const Task = require('./Task');
 const Project = require('./Project');
 const Comment = require('./Comment');
+const Finance = require('./finance')
 
 // Need to define model relationships
 
@@ -49,4 +50,4 @@ Comment.belongsTo(User, {
 });
 
 // Export for use in controllers
-module.exports = { User, Task, Project, Comment };
+module.exports = { User, Task, Project, Comment, Finance };

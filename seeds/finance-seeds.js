@@ -1,3 +1,75 @@
+/* -------------------------------------------------------------------------- */
+/*                             Import Dependencies                            */
+/* -------------------------------------------------------------------------- */
+
+const Finance = require('../models/Finance');
+
+/* -------------------------------------------------------------------------- */
+/*                            Define Finance Data to Inject                           */
+/* -------------------------------------------------------------------------- */
+    // Define array of finance data to seed
+    const financeData = [
+        {
+            family_name: 'John Badibanga',
+            age: 23,
+            school_year: 'senior',
+            monthly_budget: 1000,
+            reward: 100
+        },
+        {
+            family_name: 'Mark Badibanga',
+            age: 21,
+            school_year: 'junior',
+            monthly_budget: 1000,
+            reward: 100
+        },
+        {
+            family_name: 'Joseph Badibanga',
+            age: 19,
+            school_year: 'sophomore',
+            monthly_budget: 1000,
+            reward: 100
+        }
+    ];
+
+    // create function that bulk creates finance data using the array I created
+    const seedFinance = () => Finance.bulkCreate(financeData);
+    
+    module.exports = seedFinance;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // /* -------------------------------------------------------------------------- */
 // /*                             Import Dependencies                            */
 // /* -------------------------------------------------------------------------- */

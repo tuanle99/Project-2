@@ -1,4 +1,3 @@
-
 /* -------------------------------------------------------------------------- */
 /*                          Define Handler Functions                          */
 /* -------------------------------------------------------------------------- */
@@ -15,24 +14,19 @@
 
             // Define checkmark button in this particular iteratoin
             const checkmarkButton = el;
-                console.log(checkmarkButton)
-
+              
             // Get its associated task input field
                 // Traverse up one div
                 const checkmarkButtonDiv = checkmarkButton.parentElement;
-                    console.log(checkmarkButtonDiv);
-
+                   
                 // Go down to next sibling div
                 const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
-                    console.log(taskInputDiv);
-
+                   
                 // Go down one child to the input (find the class below with what I specified)
                 const taskInputField = taskInputDiv.querySelector('.task-input-field');
-                    console.log(taskInputField);
-            
+                    
               // Determine the current is_completed Status of the task by checking it's attribute
               const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
-                console.log(currentCompleteStatus);
             
             // If task is currently complete already when it comes from the DB...
             if (currentCompleteStatus==='true') {
@@ -62,8 +56,8 @@
                 console.log(`task title detected as ${title}`);
 
             // Get task description value
-            const descripton = document.querySelector('#new-task-description').value.trim();
-                console.log(`task description detected as ${descripton}`);
+            const description = document.querySelector('#new-task-description').value.trim();
+                console.log(`task description detected as ${description}`);
 
             // Get task description value
             const due_date = document.querySelector('#new-task-due-date').value.trim();
@@ -101,12 +95,12 @@
                     console.log(`Task Creator is ${created_by}`);
         
         // If content exists for all fields
-        if (title && descripton && due_date && user_assigned_id && created_by) {
+        if (title && description && due_date && user_assigned_id && created_by) {
 
             // Post the information to the server at route newTask
             const response = await fetch('/newTask', {
                 method: 'POST',
-                body: JSON.stringify({title, descripton, due_date, user_assigned_id, created_by}),
+                body: JSON.stringify({title, description, due_date, user_assigned_id, created_by}),
                 headers: {
                     'Content-Type': 'application/JSON',
                 }
@@ -228,8 +222,120 @@
 };
 
 /* -------------------------------- Edit Task (PUT) ------------------------------- */
+    // Edit button renders when pencil is clicked in handlebars, then update task button from modal triggers this...
+    const updateTask = async(event) => {
+
+        // Prevent Default
+        event.preventDefault();
+
+        // Define Items to Get and Manipulate
+
+            // Call out the button clicked
+            updateButton = event.currentTarget;
+
+            // Get to the parent Div to scope query selector for finding items within it by classname
+            const editTaskModal = updateButton.parentElement.parentElement.parentElement.parentElement;
+
+            // Get the latest title
+            const title = editTaskModal.querySelector('.updated-task-title').value.trim();
+                console.log(title);
+            
+            // Get latest descriptoin
+            const description = editTaskModal.querySelector('.updated-task-description').value.trim();
+                console.log(description)
+
+            // Get latest due_date
+            const due_date = editTaskModal.querySelector('.updated-task-due_date').value.trim();
+                console.log(due_date);
+
+            // Get latest assignee (get their user id)
+
+                // Get the select element by its id
+                const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
+                   
+                // Get the data attribute of the selected option within the options list
+                const user_assigned_id = latestAssigneeSelectElement.value.trim();
+                    console.log(user_assigned_id);
+            
+                // Get the id for the task to delete
+                const task_id = editTaskModal.getAttribute('data-task-id');
+                    console.log (`Task id to update is set to > ${task_id}`);
+                
+        // If content exists for all fields
+        if (title &&  description && due_date && user_assigned_id) {
+
+            // Post the information to the server at route newTask
+            const response = await fetch(`/ENTERROUTE/${task_id}`, {
+                method: 'PUT',
+                body: JSON.stringify({title, description, due_date, user_assigned_id}),
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
+            // If its an ok response refresh and load homepage again with new task
+            if (response.ok) {
+                document.location.replace('/');
+            }
+            // If it fails, notify them
+            else {
+                alert('Failed to Create Task');
+            }
+        }
+        // If no content exists when posting, alert them to fill it out first
+        else {
+            alert('Please ensure all required fields have content existing prior to making an update!');
+        }
+    };
+
     
 /* ------------------------------- Delete Task (DELETE) ------------------------------ */
+
+     // When delete button is clicked, delete the task from the db
+     const deleteTask = async(event) => {
+
+        // Prevent Default
+        event.preventDefault();
+
+        // clear variables in case of loops not closed ever somehow
+        let deleteButton;
+        let task_id;
+        
+        // Get the id for the task on which the delete button was clicked
+
+            // Get the delete-id data attribute from this delete button
+
+                // Call out the button clicked
+                deleteButton= event.currentTarget
+                    console.log(deleteButton);
+                task_id = deleteButton.getAttribute('data-delete-id');
+                    console.log(task_id);
+                    
+            // delete the task by id
+            try {
+                // Post the information
+                const response = await fetch(`/ENTERROUTE/${task_id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/JSON',
+                    }
+                });
+                // If its an ok response load the latest dash again
+                if (response.ok) {
+                    alert(`Task Deleted`);
+                    document.location.replace('/');
+                }
+                // If it fails, notify them
+                else {
+                    alert('Failed to Delete Task')
+                    return;
+                }
+            }
+            // If no content exists when posting, alert them to fill it out first
+            catch {
+                alert('Unable to delete task');
+            }
+            
+    };
 
 /* ------------------------------ Post Comments (POST) ------------------------------ */
 
@@ -314,6 +420,7 @@
     document.querySelector('#create-new-task').addEventListener('click', postNewTask);
 
 /* -------------------- Mark Task Complete or Incomplete -------------------- */
+
       // Define a variable that holds all instances of checkmark button
         // This is done at top of script when I check if the come in from server
 
@@ -322,15 +429,27 @@
           el.addEventListener('click', updateCompletionStatus)
       })
      
-/* -------------------------------- Edit Blog ------------------------------- */
+/* -------------------------------- Edit Task ------------------------------- */
  
-    // Enter when ready
+    // Define a variable that holds all instances of Update Blog Buttons (within edit modals)
+    const updateButtons = document.querySelectorAll('.update-task-button');
+
+    // Loop through this array of buttons and add an event listner to each of them to run edit blog function
+    updateButtons.forEach(function(el) {
+        el.addEventListener('click', updateTask)
+    })
   
-/* ------------------------------- Delete Blog ------------------------------ */
+/* ------------------------------- Delete Task ------------------------------ */
 
-    // Not a priority but define here if needed
+    // Define a variable that holds all instances of buttons with class delete-task
+    const deleteTaskButtons = document.querySelectorAll('.delete-task');
 
-/* ------------------------------ Post Comment ------------------------------ */
+    // Loop through this array of buttons and add an event listner to each of them to run deleteTask function
+    deleteTaskButtons.forEach(function(el) {
+        el.addEventListener('click', deleteTask)
+    });
+
+/* ------------------------------ Post Task Comment ------------------------------ */
 /*
      // Define a variable that holds all instances of buttons with class delete-blog
      const taskCommentButtons = document.querySelectorAll('.ENTERCLASS');

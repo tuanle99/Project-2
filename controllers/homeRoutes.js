@@ -3,7 +3,7 @@
 /*                             Import Dependencies                            */
 /* -------------------------------------------------------------------------- */
 const router = require("express").Router();
-const { User, Task, Project, Comment } = require("../models");
+const { User, Task, Project, Comment, Finance } = require("../models");
 // const withAuth = require("../utils/auth");
 
 /* -------------------------------------------------------------------------- */
@@ -76,7 +76,20 @@ router.get('/', async (req, res) => {
     }
   });
 */
-
+router.get("/finance", (req, res) => {
+  let dataArr = []
+  Finance.findAll({})
+    .then(result => {
+      console.log(result[0].dataValues)
+      for(i=0; i<result.length; i++){
+        dataArr.push(result[i].dataValues)
+      }
+      let hbsObj = {
+        finance: dataArr
+      }
+      res.render("finance", hbsObj)
+    })
+})
 router.get("/login", (req, res) => {
   // If the user is already logged in, redirect to homepage
   if (req.session.logged_in) {
