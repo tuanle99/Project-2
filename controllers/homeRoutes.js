@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
   try {
     // Get the data from the blogs DB
     const taskData = await Task.findAll({
+      order: [['due_date', 'ASC']],
       include: [
         {
           model: User
@@ -32,8 +33,10 @@ router.get('/', async (req, res) => {
           model: Comment
         }
       ],
+    
     });
 
+    // This wasnt working so I will come back to it as a separate kanban issue- rj
     // const currentUser = await User.findOne({
     //   where:{id:req.session.user_id}
     // });
