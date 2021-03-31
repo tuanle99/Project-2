@@ -98,7 +98,7 @@
         if (title && description && due_date && user_assigned_id && created_by) {
 
             // Post the information to the server at route newTask
-            const response = await fetch('/newTask', {
+            const response = await fetch('/api/tasks', {
                 method: 'POST',
                 body: JSON.stringify({title, description, due_date, user_assigned_id, created_by}),
                 headers: {
@@ -313,7 +313,7 @@
             // delete the task by id
             try {
                 // Post the information
-                const response = await fetch(`/ENTERROUTE/${task_id}`, {
+                const response = await fetch(`/api/tasks/${task_id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/JSON',
