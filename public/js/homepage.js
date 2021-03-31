@@ -370,15 +370,15 @@ const commentTask = async (event) => {
     console.log(task_id)
 
     // Get user id for who is submitting blog (who is logged in)
-    const user_id = commentModal.getAttribute('data-commenter-id');
-    console.log(user_id);
+    // const user_id = commentModal.getAttribute('data-commenter-id');
+    // console.log(user_id);
 
     // If content exists, Put it to the server...
-    if (comment && user_id && task_id) {
+    if (comment && task_id) {
         // Post the information
         const response = await fetch(`/api/comments`, {
             method: 'POST',
-            body: JSON.stringify({ comment, user_id, task_id }),
+            body: JSON.stringify({ comment, task_id }),
             headers: {
                 'Content-Type': 'application/JSON',
             }
@@ -386,6 +386,7 @@ const commentTask = async (event) => {
         // If its an ok response load the latest dash again
         if (response.ok) {
             alert('Comment Posted!');
+            document.location.replace('/');
         }
         // If it fails, notify them
         else {
