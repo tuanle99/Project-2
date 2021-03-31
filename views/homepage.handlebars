@@ -109,14 +109,14 @@
                 <div class="card-body">
                     <div>
                         <!--Comment Task Button-->
-                        <button type="button" class=" comment-blog btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#commentModal{{task.id}}">
+                        <button type="button" class=" btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#commentModal{{task.id}}">
                             <i class="far fa-comment"></i>
                         </button>
                             <!--Modal to Render Upon Comment (Hidden)-->
-                            <div class="modal fade mt-5" id="commentModal{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal comment-modal fade mt-5" data-commenter-id="{{current_user}}" data-task-id="{{task.id}}" id="commentModal{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <!--Modal Content-->
-                                    <div class="modal-content" data-currentuser-id={{task.user_id}} data-task-id={{task.id}}>
+                                    <div class="modal-content">
                                         <form class="p-2">
                                             <div class="mb-3">
                                                 <label for="contentinput" class="form-label fw-bolder">Comment</label>
@@ -126,7 +126,7 @@
                                         <!--Modal Footer With Buttons-->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-outline-info post-comment">Comment</button>
+                                            <button type="button" class="btn btn-outline-info comment-task">Comment</button>
                                         </div>
                                     </div>
                                 </div>

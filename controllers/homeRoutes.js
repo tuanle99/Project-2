@@ -48,7 +48,8 @@ router.get('/', async (req, res) => {
     res.render('homepage', {
       tasks,
       users,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
+      current_user_id: req.session.user_id
     });
   }
   catch (err) {
