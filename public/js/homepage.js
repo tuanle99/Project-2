@@ -168,22 +168,14 @@ const postNewTask = async (event) => {
                 };
             };
 
-    // Get the id for who is creating the task (task created by)
-
-        // Get the modal I put an attribute on
-        const creatorModal = document.querySelector('.modal-content');
-        // Get the data-user-id attribute I created
-
-        const created_by = creatorModal.getAttribute('data-created-by-user');
-        console.log(`Task Creator is ${created_by}`);
-
+   
     // If content exists for all fields
-    if ((title && description && due_date && user_assigned_id && created_by) && (date_is_valid_format===true)) {
+    if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
 
-        // Post the information to the server at route newTask
+        // Post the information to the server at route newTask (note server checks who its created by)
         const response = await fetch('/api/tasks', {
             method: 'POST',
-            body: JSON.stringify({ title, description, due_date, user_assigned_id, created_by }),
+            body: JSON.stringify({ title, description, due_date, user_assigned_id}),
             headers: {
                 'Content-Type': 'application/JSON',
             }
