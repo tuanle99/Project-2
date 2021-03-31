@@ -397,9 +397,6 @@ const commentTask = async (event) => {
     else {
         alert('Please ensure you have content filled out to update. Content cannot be blank.');
     }
-
-
-
 };
 
 
