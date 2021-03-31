@@ -37,7 +37,7 @@
             el.classList.add('text-info', 'fw-bold');
             el.innerHTML='Today';
         }
-        // Else do nothing
+        // Else do nothing... and restart the loop with the next iteration
      })
 
 /* --------------------- Set Task Color and Data Status --------------------- */
