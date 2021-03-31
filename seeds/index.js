@@ -8,6 +8,7 @@
     const seedTask = require('./task-seeds');
     const seedComment = require('./comment-seeds')
     const seedFinance = require('./finance-seeds')
+    const seedBudget = require('./budget-seeds')
     
     
     // Import the database connection instance from connection / config
@@ -35,7 +36,10 @@
         console.log('\n----- COMMENTS SEEDED -----\n');
 
         await seedFinance();
-        console.log('\n----- COMMENTS SEEDED -----\n');
+        console.log('\n----- FINANACE SEEDED -----\n');
+
+        await seedBudget();
+        console.log('\n----- BUDGET SEEDED -----\n');
 
         process.exit(0);
   };
