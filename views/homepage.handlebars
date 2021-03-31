@@ -93,7 +93,7 @@
                <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}" readonly>
             </div>
             <div class="col-md-2 d-flex justify-content-center">
-                <span class="text-center d-flex justify-content-center">
+                <span class="text-center d-flex justify-content-center task-due-dates" data-complete-state={{task.is_complete}}>
                     {{format_date task.due_date}}
                 </span>
             </div>

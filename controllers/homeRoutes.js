@@ -46,10 +46,8 @@ router.get('/', async (req, res) => {
 
     // Serialize data so the template can read it
     const tasks = taskData.map((task) => task.get({ plain: true }));
-    console.log(tasks);
-
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log(users)
+  
 
     // Pass serialized data and session flag into db
     res.render('homepage', {
