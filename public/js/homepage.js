@@ -265,7 +265,7 @@
         if (title &&  description && due_date && user_assigned_id) {
 
             // Post the information to the server at route newTask
-            const response = await fetch(`/ENTERROUTE/${task_id}`, {
+            const response = await fetch(`/api/tasks/${task_id}`, {
                 method: 'PUT',
                 body: JSON.stringify({title, description, due_date, user_assigned_id}),
                 headers: {

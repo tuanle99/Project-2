@@ -15,6 +15,20 @@ router.post('/', withAuth, async (req, res) => {
     }
 });
 
+router.put('/:id', withAuth, (req, res) => {
+    // update a category by its `id` value
+    Task.update(req.body, {
+        where: {
+            id: req.params.id,
+        },
+    })
+        .then((updatedTask) => res.json(updatedTask))
+        .catch((err) => {
+            // console.log(err);
+            res.status(400).json(err);
+        });
+});
+
 router.delete('/:id', withAuth, async (req, res) => {
     try {
         const taskData = await Task.destroy({
