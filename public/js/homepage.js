@@ -3,6 +3,11 @@
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------- Set Dates and Colors -------------------------- */
+
+    /*
+     RUNS ON EACH PAGE LOAD
+    */
+
     // Define a variable that holds a list of all dates for tasks
     const taskDueDates = document.querySelectorAll('.task-due-dates');
 
@@ -10,19 +15,15 @@
     const today = new Date();
         // Get rid of time details that throw off comparison to our string
         today.setHours(0,0,0,0)
-            console.log(today);
 
     // Loop through those dates and set colors based on comparison to today
      taskDueDates.forEach(function (el) {
-         console.log(el.innerHTML);
     
         // Get the data-complete-state from the span
         const is_complete = el.getAttribute('data-complete-state');
-            console.log(is_complete);
 
         // Parse the date of each elemenet into js readable format
         const elDueDate = Date.parse(el.innerHTML)
-            console.log(elDueDate);
     
         // If date is prior to today (and the task is incomplete), set red
         if ((elDueDate < today) && (is_complete=='false')) {
@@ -41,6 +42,10 @@
      })
 
 /* --------------------- Set Task Color and Data Status --------------------- */
+
+    /*
+     RUNS ON EACH PAGE LOAD
+    */
 
     // Define a variable that holds all instances of checkmark buttons (these keep data state)
     const checkmarkButtons = document.querySelectorAll('.set-complete-incomplete');
@@ -79,6 +84,36 @@
         };
     });
 
+/* --------- Define Date Format Validator For Use In Create and Edit -------- */
+
+    /*
+     RUNS WHEN CALLED IN CREATE OR EDIT TASK
+    */
+
+// Define date validation function
+    const validateDate = dateInput => {
+        if(dateInput.length < 10){
+            // invalid date if dateInput length is less than 10
+            return false;
+        }
+        // splitter will split the date and get the date seperator eg: /
+        const splitter = dateInput.replace(/[0-9]/g, '')[0];
+        
+        // using splitter will get the parts of the date
+        const parts = dateInput.split(splitter);
+            const day = parts[0];
+            const month = parts[1];
+            const year = parts[2];
+
+        // creating date our of the year, month day
+        const date = new Date(year, +month - 1, day);
+
+        //validates leapyear and dates exceeding month limit
+        const isValidDate = Boolean(+date) && date.getDate() == day;
+
+        // isValid date is true if the date is valid else false
+        return isValidDate;
+    };
 
 /* ------------------------------ Create New Task (POST) ----------------------------- */
 // When post is clicked in modal, log information to create new blog
@@ -89,56 +124,50 @@ const postNewTask = async (event) => {
 
     // Define Items to Get and Manipulate
 
-    // Get task title (task name) value
-    const title = document.querySelector('#new-task-title').value.trim();
-    console.log(`task title detected as ${title}`);
+        // Get task title (task name) value
+        const title = document.querySelector('#new-task-title').value.trim();
 
-    // Get task description value
-    const description = document.querySelector('#new-task-description').value.trim();
-    console.log(`task description detected as ${description}`);
+        // Get task description value
+        const description = document.querySelector('#new-task-description').value.trim();
 
-    // Get task description value
-    const due_date = document.querySelector('#new-task-due-date').value.trim();
-    console.log(`task dueDate detected as ${due_date}`);
+        // Get task due date value
+        const due_date = document.querySelector('#new-task-due-date').value.trim();
 
-    // Get task assignee
+            // Validate due date
+            const date_is_valid_format=validateDate(due_date);
 
-    // Define variable I will set with subfunction
-    let user_assigned_id;
+        // Get task assignee
 
-    // Invoke hoisted functoin I defined right below
-    displayRadioValue();
+            // Define variable I will set with subfunction
+            let user_assigned_id;
 
-    // Define sub-functoin for checking which button is selected
-    function displayRadioValue() {
-        // Get all choices by name (name is an attribute on the radio inputs)
-        const options = document.getElementsByName('assigneeS');
-        // Loop through the options and see if they are checked
-        for (i = 0; i < options.length; i++) {
-            // If an option is checked
-            if (options[i].checked) {
-                // Set its value to the user_assigned_id
-                user_assigned_id = options[i].value;
-                console.log(`Detected Radio Value is ${user_assigned_id}`);
-                break;
+            // Invoke hoisted functoin I defined right below
+            displayRadioValue();
+
+            // Define sub-functoin for checking which button is selected
+            function displayRadioValue() {
+                // Get all choices by name (name is an attribute on the radio inputs)
+                const options = document.getElementsByName('assigneeS');
+                // Loop through the options and see if they are checked
+                for (i = 0; i < options.length; i++) {
+                    // If an option is checked
+                    if (options[i].checked) {
+                        // Set its value to the user_assigned_id
+                        user_assigned_id = options[i].value;
+                        console.log(`Detected Radio Value is ${user_assigned_id}`);
+                        break;
+                    };
+                };
             };
-        };
-    };
 
-    // Get the id for who is creating the task (task created by)
-    // Get the modal I put an attribute on
-    const creatorModal = document.querySelector('.modal-content');
-    // Get the data-user-id attribute I created
-    const created_by = creatorModal.getAttribute('data-created-by-user');
-    console.log(`Task Creator is ${created_by}`);
-
+   
     // If content exists for all fields
-    if (title && description && due_date && user_assigned_id && created_by) {
+    if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
 
-        // Post the information to the server at route newTask
+        // Post the information to the server at route newTask (note server checks who its created by)
         const response = await fetch('/api/tasks', {
             method: 'POST',
-            body: JSON.stringify({ title, description, due_date, user_assigned_id, created_by }),
+            body: JSON.stringify({ title, description, due_date, user_assigned_id}),
             headers: {
                 'Content-Type': 'application/JSON',
             }
@@ -149,12 +178,16 @@ const postNewTask = async (event) => {
         }
         // If it fails, notify them
         else {
-            alert('Failed to Create Task');
+            alert('Failed to Create Task. Please make sure the date you have entered is a valid date');
         }
     }
     // If no content exists when posting, alert them to fill it out first
+    else if (date_is_valid_format===false) {
+        
+        alert ('Please make sure you enter the due date in the proper DD/MM/YYYY format'); 
+    }
     else {
-        alert('Please ensure you have populated all required fields!');
+        alert ('Please ensure you have entered informatoin in all fields before creating!');
     }
 };
 
@@ -172,28 +205,22 @@ const updateCompletionStatus = async (event) => {
     let is_complete = 0;
     // Get the button that was clicked
     const checkmarkButton = event.currentTarget;
-    console.log(checkmarkButton)
 
     // Get the task input field
     // Traverse up one div
     const checkmarkButtonDiv = checkmarkButton.parentElement;
-    console.log(checkmarkButtonDiv);
 
     // Go down to next sibling div
     const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
-    console.log(taskInputDiv);
 
     // Go down one child to the input (find the class below with what I specified)
     const taskInputField = taskInputDiv.querySelector('.task-input-field');
-    console.log(taskInputField);
 
     // Get the id of the task of interest
     const id = taskInputField.id;
-    console.log(`task id detected as ${id}`);
 
     // Determine the current is_completed Status of the task by checking it's attribute
     const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
-    console.log(currentCompleteStatus);
 
     // If task is currently incomplete, set it to complte
     if (currentCompleteStatus === 'false') {
@@ -235,6 +262,7 @@ const updateCompletionStatus = async (event) => {
         // Set the button to outline green
         // Remove solid class
         checkmarkButton.classList.remove('btn-success');
+
         // Add the outline class
         checkmarkButton.classList.add('btn-outline-success');
 
@@ -280,15 +308,15 @@ const updateTask = async (event) => {
 
     // Get the latest title
     const title = editTaskModal.querySelector('.updated-task-title').value.trim();
-    console.log(title);
 
     // Get latest descriptoin
     const description = editTaskModal.querySelector('.updated-task-description').value.trim();
-    console.log(description)
-
+    
     // Get latest due_date
     const due_date = editTaskModal.querySelector('.updated-task-due_date').value.trim();
-    console.log(due_date);
+    
+        // Validate Date Format
+        const date_is_valid_format=validateDate(due_date);
 
     // Get latest assignee (get their user id)
 
@@ -297,14 +325,14 @@ const updateTask = async (event) => {
 
     // Get the data attribute of the selected option within the options list
     const user_assigned_id = latestAssigneeSelectElement.value.trim();
-    console.log(user_assigned_id);
+    
 
     // Get the id for the task to delete
     const task_id = editTaskModal.getAttribute('data-task-id');
-    console.log(`Task id to update is set to > ${task_id}`);
+  
 
     // If content exists for all fields
-    if (title && description && due_date && user_assigned_id) {
+    if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
 
         // Post the information to the server at route newTask
         const response = await fetch(`/api/tasks/${task_id}`, {
@@ -320,10 +348,13 @@ const updateTask = async (event) => {
         }
         // If it fails, notify them
         else {
-            alert('Failed to Create Task');
+            alert('Failed to Create Task. Please check that your date is a valid one.');
         }
     }
     // If no content exists when posting, alert them to fill it out first
+    else if (date_is_valid_format===false) {
+        alert('Please make sure you enter the due date in the proper DD/MM/YYYY Format');
+    }
     else {
         alert('Please ensure all required fields have content existing prior to making an update!');
     }
@@ -346,11 +377,10 @@ const deleteTask = async (event) => {
 
     // Get the delete-id data attribute from this delete button
 
-    // Call out the button clicked
+    // Call out the button clicked & get the id
     deleteButton = event.currentTarget
-    console.log(deleteButton);
     task_id = deleteButton.getAttribute('data-delete-id');
-    console.log(task_id);
+   
 
     // delete the task by id
     try {
@@ -387,25 +417,17 @@ const commentTask = async (event) => {
     // Prevent Default
     event.preventDefault();
 
-    // Get the comment, blog id and user id to post
-
-    // Get comment by traversing dom from event target with vanilla js
-
     // Call out the button clicked
     const postCommentButton = event.currentTarget
-    console.log(postCommentButton);
 
     // Go to commant modal grandparent 
     const commentModal = postCommentButton.parentElement.parentElement.parentElement.parentElement;
-    console.log(commentModal);
 
     // Get the value of the comment from that modal div using qS scoped to comment modal
     const comment = commentModal.querySelector('.new-comment').value.trim();
-    console.log(comment);
 
     // Get the task id the comment is for
     const task_id = commentModal.getAttribute('data-task-id');
-    console.log(task_id)
 
     // Get user id for who is submitting blog (who is logged in)
     // const user_id = commentModal.getAttribute('data-commenter-id');
@@ -437,8 +459,6 @@ const commentTask = async (event) => {
         alert('Please ensure you have content filled out to update. Content cannot be blank.');
     }
 };
-
-
 
 /* -------------------------------------------------------------------------- */
 /*                            Define Event Handlers                           */
