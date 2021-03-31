@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers'); // This is where we define helper functoins for handlebars
 const sequelize = require('./config/connection');
+const nodemailer = require('nodemailer');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const Handlebars = require('handlebars');

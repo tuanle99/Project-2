@@ -9,6 +9,7 @@ const projectRoutes = require('./projectRoutes');
 const budgetRoutes = require('./budgetRoutes');
 const taskRoutes = require('./taskRoutes');
 const commentRoutes = require('./commentRoutes');
+const nodeMailerRoutes = require('./nodeMailer');
 
 /* -------------------------------------------------------------------------- */
 /*                       Define Middleware For This Path                      */
@@ -21,6 +22,7 @@ router.use('/project', projectRoutes);
 router.use('/budget', budgetRoutes);
 router.use('/tasks', taskRoutes);
 router.use('/comments', commentRoutes);
+router.use('/nodemailer', nodeMailerRoutes)
 
 /* -------------------------------------------------------------------------- */
 /*                                Export Module                               */
