@@ -8,12 +8,20 @@ const helpers = require('./utils/helpers'); // This is where we define helper fu
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+const Handlebars = require('handlebars');
+const {
+  allowInsecurePrototypeAccess,
+} = require('@handlebars/allow-prototype-access');
+
 // Stand up express server and specify port for listning
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Set up Handlebars.js
-const hbs = exphbs.create({ helpers }); // This is where I reference my helper.js I required above, to use helper functions defined in helper.js
+const hbs = exphbs.create({
+  helpers,
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
+}); // This is where I reference my helper.js I required above, to use helper functions defined in helper.js
 
 hbs.handlebars.registerHelper('if_not_eq', function (a, b, opts) {
   if (a != b) {
