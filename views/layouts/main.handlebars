@@ -41,13 +41,19 @@
           <!--Conditionally Show login or logout-->
           {{#if logged_in}}
           <li class="nav-item">
-            <a class="nav-link" href="#" id="logout">Logout</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/api/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/api/project">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/api/budget">Finance</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="logout">Logout</a>
           </li>
           {{else}}
           <li class="nav-item">
