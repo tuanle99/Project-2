@@ -28,6 +28,11 @@
         if ((elDueDate < today) && (is_complete=='false')) {
             el.classList.add('text-danger');
         }
+        // If date is prior to today (and task is complete), set green
+        else if ((elDueDate < today) && (is_complete=='true')) {
+            el.classList.add('text-success');
+        }
+        // If date is today, set to today
         else if(!(elDueDate<today) && !(elDueDate>today)) {
             el.classList.add('text-info', 'fw-bold');
             el.innerHTML='Today';
