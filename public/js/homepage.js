@@ -2,45 +2,83 @@
 /*                          Define Handler Functions                          */
 /* -------------------------------------------------------------------------- */
 
-/* --- Check Task Status and Set Class Accordingly (Each time page loads) --- */
+/* -------------------------- Set Dates and Colors -------------------------- */
+    // Define a variable that holds a list of all dates for tasks
+    const taskDueDates = document.querySelectorAll('.task-due-dates');
 
-// When data is retrieved from DB, loop through all tasks and check completion status
+    // Define today again
+    const today = new Date();
+        // Get rid of time details that throw off comparison to our string
+        today.setHours(0,0,0,0)
+            console.log(today);
 
-// Define a variable that holds all instances of checkmark buttons (these keep data state)
-const checkmarkButtons = document.querySelectorAll('.set-complete-incomplete');
+    // Loop through those dates and set colors based on comparison to today
+     taskDueDates.forEach(function (el) {
+         console.log(el.innerHTML);
+    
+        // Get the data-complete-state from the span
+        const is_complete = el.getAttribute('data-complete-state');
+            console.log(is_complete);
 
-// Loop through teh array and set approrpriate colors
-checkmarkButtons.forEach(function (el) {
+        // Parse the date of each elemenet into js readable format
+        const elDueDate = Date.parse(el.innerHTML)
+            console.log(elDueDate);
+    
+        // If date is prior to today (and the task is incomplete), set red
+        if ((elDueDate < today) && (is_complete=='false')) {
+            el.classList.add('text-danger');
+        }
+        // If date is prior to today (and task is complete), set green
+        else if ((elDueDate < today) && (is_complete=='true')) {
+            el.classList.add('text-success');
+        }
+        // If date is today, set to today
+        else if(!(elDueDate<today) && !(elDueDate>today)) {
+            el.classList.add('text-info', 'fw-bold');
+            el.innerHTML='Today';
+        }
+        // Else do nothing... and restart the loop with the next iteration
+     })
 
-    // Define checkmark button in this particular iteratoin
-    const checkmarkButton = el;
+/* --------------------- Set Task Color and Data Status --------------------- */
 
-    // Get its associated task input field
-    // Traverse up one div
-    const checkmarkButtonDiv = checkmarkButton.parentElement;
+    // Define a variable that holds all instances of checkmark buttons (these keep data state)
+    const checkmarkButtons = document.querySelectorAll('.set-complete-incomplete');
 
-    // Go down to next sibling div
-    const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+    // Loop through teh array and set approrpriate colors
+    checkmarkButtons.forEach(function (el) {
 
-    // Go down one child to the input (find the class below with what I specified)
-    const taskInputField = taskInputDiv.querySelector('.task-input-field');
+        // Define checkmark button in this particular iteratoin
+        const checkmarkButton = el;
 
-    // Determine the current is_completed Status of the task by checking it's attribute
-    const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
+        // Get its associated task input field
 
-    // If task is currently complete already when it comes from the DB...
-    if (currentCompleteStatus === 'true') {
+            // Traverse up one div
+            const checkmarkButtonDiv = checkmarkButton.parentElement;
 
-        // Set the button to solid green
-        // Remove outline class
-        checkmarkButton.classList.remove('btn-outline-success');
-        // Add solit class
-        checkmarkButton.classList.add('btn-success');
+            // Go down to next sibling div
+            const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
 
-        // Set the input to light green
-        taskInputField.classList.add('bg-success', 'text-white');
-    };
-});
+            // Go down one child to the input (find the class below with what I specified)
+            const taskInputField = taskInputDiv.querySelector('.task-input-field');
+
+        // Determine the current is_completed Status of the task by checking it's attribute
+        const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
+
+        // If task is currently complete already when it comes from the DB...
+        if (currentCompleteStatus === 'true') {
+
+            // Set the button to solid green
+            // Remove outline class
+            checkmarkButton.classList.remove('btn-outline-success');
+            // Add solit class
+            checkmarkButton.classList.add('btn-success');
+
+            // Set the input to light green
+            taskInputField.classList.add('bg-success', 'text-white');
+        };
+    });
+
 
 /* ------------------------------ Create New Task (POST) ----------------------------- */
 // When post is clicked in modal, log information to create new blog
@@ -414,16 +452,13 @@ document.querySelector('#create-new-task').addEventListener('click', postNewTask
 /* -------------------- Mark Task Complete or Incomplete -------------------- */
 
 // Define a variable that holds all instances of checkmark button
-// This is done at top of script when I check if the come in from server
+    // This is done at top of script when I check if the come in from server
 
 // Loop through this array of buttons and add an event listner to each of them to run edit blog function
 checkmarkButtons.forEach(function (el) {
     el.addEventListener('click', updateCompletionStatus)
 })
 
-checkmarkButtons.forEach(function (el) {
-    el.addEventListener('click', console.log('hello'));
-});
 
 /* -------------------------------- Edit Task ------------------------------- */
 
