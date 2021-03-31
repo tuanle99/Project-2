@@ -8,6 +8,7 @@ const profileRoutes = require('./profileRoutes');
 const projectRoutes = require('./projectRoutes');
 const budgetRoutes = require('./budgetRoutes');
 const taskRoutes = require('./taskRoutes');
+const commentRoutes = require('./commentRoutes');
 
 /* -------------------------------------------------------------------------- */
 /*                       Define Middleware For This Path                      */
@@ -19,6 +20,7 @@ router.use('/profile', profileRoutes);
 router.use('/project', projectRoutes);
 router.use('/budget', budgetRoutes);
 router.use('/tasks', taskRoutes);
+router.use('/comments', commentRoutes);
 
 /* -------------------------------------------------------------------------- */
 /*                                Export Module                               */
