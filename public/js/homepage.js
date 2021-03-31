@@ -15,19 +15,15 @@
     const today = new Date();
         // Get rid of time details that throw off comparison to our string
         today.setHours(0,0,0,0)
-            console.log(today);
 
     // Loop through those dates and set colors based on comparison to today
      taskDueDates.forEach(function (el) {
-         console.log(el.innerHTML);
     
         // Get the data-complete-state from the span
         const is_complete = el.getAttribute('data-complete-state');
-            console.log(is_complete);
 
         // Parse the date of each elemenet into js readable format
         const elDueDate = Date.parse(el.innerHTML)
-            console.log(elDueDate);
     
         // If date is prior to today (and the task is incomplete), set red
         if ((elDueDate < today) && (is_complete=='false')) {
@@ -130,19 +126,15 @@ const postNewTask = async (event) => {
 
         // Get task title (task name) value
         const title = document.querySelector('#new-task-title').value.trim();
-        console.log(`task title detected as ${title}`);
 
         // Get task description value
         const description = document.querySelector('#new-task-description').value.trim();
-        console.log(`task description detected as ${description}`);
 
         // Get task due date value
         const due_date = document.querySelector('#new-task-due-date').value.trim();
-        console.log(`task dueDate detected as ${due_date}`);
 
             // Validate due date
             const date_is_valid_format=validateDate(due_date);
-                console.log(date_is_valid_format);
 
         // Get task assignee
 
@@ -213,28 +205,22 @@ const updateCompletionStatus = async (event) => {
     let is_complete = 0;
     // Get the button that was clicked
     const checkmarkButton = event.currentTarget;
-    console.log(checkmarkButton)
 
     // Get the task input field
     // Traverse up one div
     const checkmarkButtonDiv = checkmarkButton.parentElement;
-    console.log(checkmarkButtonDiv);
 
     // Go down to next sibling div
     const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
-    console.log(taskInputDiv);
 
     // Go down one child to the input (find the class below with what I specified)
     const taskInputField = taskInputDiv.querySelector('.task-input-field');
-    console.log(taskInputField);
 
     // Get the id of the task of interest
     const id = taskInputField.id;
-    console.log(`task id detected as ${id}`);
 
     // Determine the current is_completed Status of the task by checking it's attribute
     const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
-    console.log(currentCompleteStatus);
 
     // If task is currently incomplete, set it to complte
     if (currentCompleteStatus === 'false') {
@@ -276,6 +262,7 @@ const updateCompletionStatus = async (event) => {
         // Set the button to outline green
         // Remove solid class
         checkmarkButton.classList.remove('btn-success');
+
         // Add the outline class
         checkmarkButton.classList.add('btn-outline-success');
 
@@ -390,11 +377,10 @@ const deleteTask = async (event) => {
 
     // Get the delete-id data attribute from this delete button
 
-    // Call out the button clicked
+    // Call out the button clicked & get the id
     deleteButton = event.currentTarget
-    console.log(deleteButton);
     task_id = deleteButton.getAttribute('data-delete-id');
-    console.log(task_id);
+   
 
     // delete the task by id
     try {
@@ -431,25 +417,17 @@ const commentTask = async (event) => {
     // Prevent Default
     event.preventDefault();
 
-    // Get the comment, blog id and user id to post
-
-    // Get comment by traversing dom from event target with vanilla js
-
     // Call out the button clicked
     const postCommentButton = event.currentTarget
-    console.log(postCommentButton);
 
     // Go to commant modal grandparent 
     const commentModal = postCommentButton.parentElement.parentElement.parentElement.parentElement;
-    console.log(commentModal);
 
     // Get the value of the comment from that modal div using qS scoped to comment modal
     const comment = commentModal.querySelector('.new-comment').value.trim();
-    console.log(comment);
 
     // Get the task id the comment is for
     const task_id = commentModal.getAttribute('data-task-id');
-    console.log(task_id)
 
     // Get user id for who is submitting blog (who is logged in)
     // const user_id = commentModal.getAttribute('data-commenter-id');
@@ -481,8 +459,6 @@ const commentTask = async (event) => {
         alert('Please ensure you have content filled out to update. Content cannot be blank.');
     }
 };
-
-
 
 /* -------------------------------------------------------------------------- */
 /*                            Define Event Handlers                           */
