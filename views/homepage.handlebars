@@ -90,7 +90,7 @@
                 <button type="button" class="btn set-complete-incomplete btn-sm btn-outline-success my-3" data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
-                <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
+               <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}" readonly>
             </div>
             <div class="col-md-2 d-flex justify-content-center">
                 <span class="text-center d-flex justify-content-center">
@@ -108,8 +108,31 @@
             <div class="card mt-1 p-0">
                 <div class="card-body">
                     <div>
+                        <!--Comment Task Button-->
+                        <button type="button" class=" btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#commentModal{{task.id}}">
+                            <i class="far fa-comment"></i>
+                        </button>
+                            <!--Modal to Render Upon Comment (Hidden)-->
+                            <div class="modal comment-modal fade mt-5" data-commenter-id="{{current_user}}" data-task-id="{{task.id}}" id="commentModal{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <!--Modal Content-->
+                                    <div class="modal-content">
+                                        <form class="p-2">
+                                            <div class="mb-3">
+                                                <label for="contentinput" class="form-label fw-bolder">Comment</label>
+                                                <textarea class="form-control new-comment" placeholder="Enter Comment..."rows="3"></textarea>
+                                            </div>
+                                        </form>
+                                        <!--Modal Footer With Buttons-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-outline-info comment-task">Comment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <!--Edit Task Button-->
-                        <button type="button" class="btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#edit-modal-{{task.id}}">
+                        <button type="button" class="btn btn-outline-primary mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#edit-modal-{{task.id}}">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
                             <!-- Edit Task Modal (Hidden) -->
@@ -149,7 +172,7 @@
                                         </form>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="update-task-button btn btn-outline-info">Update Task</button>
+                                            <button type="button" class="update-task-button btn btn-outline-primary">Update Task</button>
                                         </div>
                                     </div>
                                 </div>

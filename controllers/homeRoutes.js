@@ -34,6 +34,10 @@ router.get('/', async (req, res) => {
       ],
     });
 
+    // const currentUser = await User.findOne({
+    //   where:{id:req.session.user_id}
+    // });
+
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
 
@@ -48,7 +52,8 @@ router.get('/', async (req, res) => {
     res.render('homepage', {
       tasks,
       users,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
+     // currentUser
     });
   }
   catch (err) {

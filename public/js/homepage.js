@@ -171,9 +171,9 @@
         checkmarkButton.setAttribute('data-complete-state', 'true');
 
         // // Update the db with the change in task status
-        // const response = await fetch('/updateTaskStatus', {
+        // const response = await fetch('/ENTERPATH/${id}', {
         //     method: 'PUT',
-        //     body: JSON.stringify({is_complete, id}),
+        //     body: JSON.stringify({is_complete}),
         //     headers: {
         //         'Content-Type': 'application/JSON',
         //     }
@@ -339,10 +339,8 @@
 
 /* ------------------------------ Post Comments (POST) ------------------------------ */
 
-    // When edit button is clicked, pull of modal with initial text populated (then re-use post) adding stuff
-    /*
-
-    const postComment = async(event) => {
+    // When the comment button is clicked (from within the comment modal, not the little comment icon that renders the modal...)
+    const commentTask = async(event) => {
 
         // Prevent Default
         event.preventDefault();
@@ -350,55 +348,47 @@
         // Get the comment, blog id and user id to post
 
             // Get comment by traversing dom from event target with vanilla js
-                // Call out the button clicked
-                const postCommentButton = event.target
-                    console.log(postCommentButton);
-                // Go up a parent
-                const upFromButton = postCommentButton.parentElement;
-                    console.log(upFromButton);
-                // Go to prior sibling
-                const form = upFromButton.previousElementSibling;
-                    console.log(form);
-                // Find within prior sibling element, the class of element holing our comment
-                const textArea = form.querySelector('.new-comment');
-                    console.log(textArea);
-                // Get the trimmed value of the text area (the comment)
-                const comment = textArea.value.trim();
-                    console.log(comment);
-                
-                
-            // Get the blog id
-                // Go up one element from form
-                const modalDiv = form.parentElement;
-                // Get the blog id
-                const blog_id = modalDiv.getAttribute('data-blog-id');
-                    console.log(blog_id);
-                
 
+                // Call out the button clicked
+                const postCommentButton = event.currentTarget
+                    console.log(postCommentButton);
+                
+                // Go to commant modal grandparent 
+                const commentModal = postCommentButton.parentElement.parentElement.parentElement.parentElement;
+                    console.log(commentModal);
+                
+                // Get the value of the comment from that modal div using qS scoped to comment modal
+                const comment = commentModal.querySelector('.new-comment').value.trim();
+                    console.log(comment);
+        
+            // Get the task id the comment is for
+            const task_id = commentModal.getAttribute('data-task-id');
+                console.log(task_id)
+               
             // Get user id for who is submitting blog (who is logged in)
-             const user_id = modalDiv.getAttribute('data-currentuser-id');
+             const user_id = commentModal.getAttribute('data-commenter-id');
                 console.log(user_id);
     
             // If content exists, Put it to the server...
             if (comment) {
                 // Post the information
-                const response = await fetch(`/api/dash/comment`, {
+                const response = await fetch(`ENTER ROUTE`, {
                     method: 'POST',
-                    body: JSON.stringify({comment,blog_id,user_id}),
+                    body: JSON.stringify({comment,task_id,user_id}),
                     headers: {
                         'Content-Type': 'application/JSON',
                     }
                 });
                 // If its an ok response load the latest dash again
                 if (response.ok) {
-                    document.location.replace('/api/dash');
+                    alert('Comment Posted!');
                 }
                 // If it fails, notify them
                 else {
-                    alert('Failed to update')
+                    alert('Uh Ohhh... Failed to post comment. ')
                 }
             }
-            
+    
             // If no content exists when posting, alert them to fill it out first
             else {
                 alert('Please ensure you have content filled out to update. Content cannot be blank.');
@@ -408,7 +398,7 @@
 
     };
 
-    */
+
 
 /* -------------------------------------------------------------------------- */
 /*                            Define Event Handlers                           */
@@ -450,14 +440,14 @@
     });
 
 /* ------------------------------ Post Task Comment ------------------------------ */
-/*
+
      // Define a variable that holds all instances of buttons with class delete-blog
-     const taskCommentButtons = document.querySelectorAll('.ENTERCLASS');
+     const taskCommentButtons = document.querySelectorAll('.comment-task');
 
      // Loop through this array of buttons and add an event listner to each of them to run edit blog function
      taskCommentButtons.forEach(function(el) {
-         el.addEventListener('click', ENTER FUNCTION)
+         el.addEventListener('click', commentTask)
      });
-*/
+
 
 
