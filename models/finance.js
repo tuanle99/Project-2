@@ -4,7 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // Initialize Product model (table) by extending off Sequelize's Model class
-class Finance extends Model {}
+class Finance extends Model { }
 
 // set up fields and rules for Finance model
 Finance.init(
@@ -15,41 +15,39 @@ Finance.init(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
+
     },
-    family_name: {
+    school_year: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    age: {
+    monthly_budget: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isNumeric: true,
+      }
+    },
+    reward: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isNumeric: true
       },
     },
-      school_year: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      monthly_budget: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          isNumeric: true,
-        }
-      },
-      reward: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          isNumeric: true
-        },
-      }
-    },
-    {
 
-      sequelize,
-      timestamps: false,
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
+  },
+  {
+
+    sequelize,
+    timestamps: false,
     freezeTableName: true,
     underscored: true,
     modelName: 'finance',
