@@ -42,7 +42,7 @@
         // Else do nothing... and restart the loop with the next iteration
      })
 
-/* --------------------- Set Task Color and Data Status --------------------- */
+/* --------------------- Set Task Color and Complete Status --------------------- */
 
     /*
 
@@ -126,7 +126,6 @@
     };
 
 
-
 /* -------------------- Mark Task Complete or Incomplete (PUT) -------------------- */
 
     // When post is clicked in modal, log information to create new blog
@@ -143,14 +142,15 @@
         const checkmarkButton = event.currentTarget;
 
         // Get the task input field
-        // Traverse up one div
-        const checkmarkButtonDiv = checkmarkButton.parentElement;
 
-        // Go down to next sibling div
-        const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+            // Traverse up one div
+            const checkmarkButtonDiv = checkmarkButton.parentElement;
 
-        // Go down one child to the input (find the class below with what I specified)
-        const taskInputField = taskInputDiv.querySelector('.task-input-field');
+            // Go down to next sibling div
+            const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+
+            // Go down one child to the input (find the class below with what I specified)
+            const taskInputField = taskInputDiv.querySelector('.task-input-field');
 
         // Get the id of the task of interest
         const id = taskInputField.id;
@@ -163,11 +163,14 @@
 
             // Set is_complete to true
             is_complete = 1;
+
             // Set the button to solid green
-            // Remove outline class
-            checkmarkButton.classList.remove('btn-outline-success');
-            // Add solit class
-            checkmarkButton.classList.add('btn-success');
+
+                // Remove outline class
+                checkmarkButton.classList.remove('btn-outline-success');
+
+                // Add solit class
+                checkmarkButton.classList.add('btn-success');
 
             // Set the input to light green
             taskInputField.classList.add('bg-success', 'text-white');
