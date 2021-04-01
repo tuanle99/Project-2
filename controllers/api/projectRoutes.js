@@ -3,6 +3,9 @@ const { User, Task, Comment, Project } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
+    const current_user = await User.findOne({
+      where: { id: req.session.user_id },
+    });
     const projects = await Project.findAll({
       include: [
         {
@@ -25,8 +28,34 @@ router.get('/', async (req, res) => {
     });
 
     res.render('project', {
+      logged_in: req.session.logged_in,
       projects,
+      current_user,
     });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post('/create', async (req, res) => {
+  try {
+    const newProject = await Project.create({
+      ...req.body,
+    });
+    res.redirect('/api/project');
+    res.status(200).status(newProject);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post('/delete', async (req, res) => {
+  try {
+    const newProject = await Project.destroy({
+      where: { id: req.body.id },
+    });
+    res.redirect('/api/project');
+    res.status(200).status(newProject);
   } catch (err) {
     res.status(500).json(err);
   }
