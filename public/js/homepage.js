@@ -1,11 +1,12 @@
 /* -------------------------------------------------------------------------- */
-/*                          Define Handler Functions                          */
+/*                    Define script to run on each pageload                   */
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------- Set Dates and Colors -------------------------- */
-
     /*
+
      RUNS ON EACH PAGE LOAD
+
     */
 
     // Define a variable that holds a list of all dates for tasks
@@ -41,10 +42,12 @@
         // Else do nothing... and restart the loop with the next iteration
      })
 
-/* --------------------- Set Task Color and Data Status --------------------- */
+/* --------------------- Set Task Color and Complete Status --------------------- */
 
     /*
+
      RUNS ON EACH PAGE LOAD
+
     */
 
     // Define a variable that holds all instances of checkmark buttons (these keep data state)
@@ -84,10 +87,17 @@
         };
     });
 
-/* --------- Define Date Format Validator For Use In Create and Edit -------- */
+/* -------------------------------------------------------------------------- */
+/*                          Define Handler Functions                          */
+/* -------------------------------------------------------------------------- */
+
+
+/* --------------- Date format validator for new and edit task -------------- */
 
     /*
+
      RUNS WHEN CALLED IN CREATE OR EDIT TASK
+
     */
 
 // Define date validation function
@@ -116,275 +126,269 @@
     };
 
 
-
 /* -------------------- Mark Task Complete or Incomplete (PUT) -------------------- */
 
-// When post is clicked in modal, log information to create new blog
-const updateCompletionStatus = async (event) => {
+    // When post is clicked in modal, log information to create new blog
+    const updateCompletionStatus = async (event) => {
 
-    // Prevent Default
-    event.preventDefault();
+        // Prevent Default
+        event.preventDefault();
 
-    // Define Elements That Need to Be Manipulated or Read
+        // Define Elements That Need to Be Manipulated or Read
 
-    // Default value is incomplete
-    let is_complete = 0;
-    // Get the button that was clicked
-    const checkmarkButton = event.currentTarget;
+        // Default value is incomplete
+        let is_complete = 0;
+        // Get the button that was clicked
+        const checkmarkButton = event.currentTarget;
 
-    // Get the task input field
-    // Traverse up one div
-    const checkmarkButtonDiv = checkmarkButton.parentElement;
+        // Get the task input field
 
-    // Go down to next sibling div
-    const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
+            // Traverse up one div
+            const checkmarkButtonDiv = checkmarkButton.parentElement;
 
-    // Go down one child to the input (find the class below with what I specified)
-    const taskInputField = taskInputDiv.querySelector('.task-input-field');
+            // Go down to next sibling div
+            const taskInputDiv = checkmarkButtonDiv.nextElementSibling;
 
-    // Get the id of the task of interest
-    const id = taskInputField.id;
+            // Go down one child to the input (find the class below with what I specified)
+            const taskInputField = taskInputDiv.querySelector('.task-input-field');
 
-    // Determine the current is_completed Status of the task by checking it's attribute
-    const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
+        // Get the id of the task of interest
+        const id = taskInputField.id;
 
-    // If task is currently incomplete, set it to complte
-    if (currentCompleteStatus === 'false') {
+        // Determine the current is_completed Status of the task by checking it's attribute
+        const currentCompleteStatus = checkmarkButton.getAttribute('data-complete-state');
 
-        // Set is_complete to true
-        is_complete = 1;
-        // Set the button to solid green
-        // Remove outline class
-        checkmarkButton.classList.remove('btn-outline-success');
-        // Add solit class
-        checkmarkButton.classList.add('btn-success');
+        // If task is currently incomplete, set it to complte
+        if (currentCompleteStatus === 'false') {
 
-        // Set the input to light green
-        taskInputField.classList.add('bg-success', 'text-white');
+            // Set is_complete to true
+            is_complete = 1;
 
-        // Set its status attribute to completed
-        checkmarkButton.setAttribute('data-complete-state', 'true');
+            // Set the button to solid green
 
-        // Update the db with the change in task status
-        const response = await fetch(`/api/tasks/${id}`, {
-            method: 'PUT',
-            body: JSON.stringify({is_complete}),
-            headers: {
-                'Content-Type': 'application/JSON',
+                // Remove outline class
+                checkmarkButton.classList.remove('btn-outline-success');
+
+                // Add solit class
+                checkmarkButton.classList.add('btn-success');
+
+            // Set the input to light green
+            taskInputField.classList.add('bg-success', 'text-white');
+
+            // Set its status attribute to completed
+            checkmarkButton.setAttribute('data-complete-state', 'true');
+
+            // Update the db with the change in task status
+            const response = await fetch(`/api/tasks/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({is_complete}),
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
+            // If its an ok response refresh and load homepage again with new task
+            if (response.ok) {
+                document.location.replace('/');
             }
-        });
-        // If its an ok response refresh and load homepage again with new task
-        if (response.ok) {
-            document.location.replace('/');
-        }
-        // If it fails, notify them
-        else {
-            alert('Failed to update Task Status');
-        }
-    }
-
-    // If the task is currently completed, set it back to incomplete and make needed changes
-    else {
-        // Set the button to outline green
-        // Remove solid class
-        checkmarkButton.classList.remove('btn-success');
-
-        // Add the outline class
-        checkmarkButton.classList.add('btn-outline-success');
-
-        // Remove green background and white text class
-        taskInputField.classList.remove('bg-success', 'text-white');
-
-        // Set its status attribute to incomplete again
-        checkmarkButton.setAttribute('data-complete-state', 'false');
-
-        // Update the db with the change in task status
-        const response = await fetch(`/api/tasks/${id}`, {
-            method: 'PUT',
-            body: JSON.stringify({is_complete, id}),
-            headers: {
-                'Content-Type': 'application/JSON',
+            // If it fails, notify them
+            else {
+                alert('Failed to update Task Status');
             }
-        });
-        // If its an ok response refresh and load homepage again with new task
-        if (response.ok) {
-            document.location.replace('/');
         }
-        // If it fails, notify them
+
+        // If the task is currently completed, set it back to incomplete and make needed changes
         else {
-            alert('Failed to update Task Status');
+            // Set the button to outline green
+            // Remove solid class
+            checkmarkButton.classList.remove('btn-success');
+
+            // Add the outline class
+            checkmarkButton.classList.add('btn-outline-success');
+
+            // Remove green background and white text class
+            taskInputField.classList.remove('bg-success', 'text-white');
+
+            // Set its status attribute to incomplete again
+            checkmarkButton.setAttribute('data-complete-state', 'false');
+
+            // Update the db with the change in task status
+            const response = await fetch(`/api/tasks/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({is_complete, id}),
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
+            // If its an ok response refresh and load homepage again with new task
+            if (response.ok) {
+                document.location.replace('/');
+            }
+            // If it fails, notify them
+            else {
+                alert('Failed to update Task Status');
+            }
         }
-    }
-};
+    };
 
 /* -------------------------------- Edit Task (PUT) ------------------------------- */
-// Edit button renders when pencil is clicked in handlebars, then update task button from modal triggers this...
-const updateTask = async (event) => {
+    // Edit button renders when pencil is clicked in handlebars, then update task button from modal triggers this...
+    const updateTask = async (event) => {
 
-    // Prevent Default
-    event.preventDefault();
+        // Prevent Default
+        event.preventDefault();
 
-    // Define Items to Get and Manipulate
+        // Call out the button clicked
+        updateButton = event.currentTarget;
 
-    // Call out the button clicked
-    updateButton = event.currentTarget;
+        // Get to the parent Div to scope query selector for finding items within it by classname
+        const editTaskModal = updateButton.parentElement.parentElement.parentElement.parentElement;
 
-    // Get to the parent Div to scope query selector for finding items within it by classname
-    const editTaskModal = updateButton.parentElement.parentElement.parentElement.parentElement;
+        // Get the latest title
+        const title = editTaskModal.querySelector('.updated-task-title').value.trim();
 
-    // Get the latest title
-    const title = editTaskModal.querySelector('.updated-task-title').value.trim();
+        // Get latest descriptoin
+        const description = editTaskModal.querySelector('.updated-task-description').value.trim();
+        
+        // Get latest due_date
+        const due_date = editTaskModal.querySelector('.updated-task-due_date').value.trim();
+        
+            // Validate Date Format
+            const date_is_valid_format=validateDate(due_date);
 
-    // Get latest descriptoin
-    const description = editTaskModal.querySelector('.updated-task-description').value.trim();
+        // Get latest assignee (get their user id)
+
+            // Get the select element by its id
+            const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
+
+            // Get the data attribute of the selected option within the options list
+            const user_assigned_id = latestAssigneeSelectElement.value.trim();
+        
+
+        // Get the id for the task to delete
+        const task_id = editTaskModal.getAttribute('data-task-id');
     
-    // Get latest due_date
-    const due_date = editTaskModal.querySelector('.updated-task-due_date').value.trim();
-    
-        // Validate Date Format
-        const date_is_valid_format=validateDate(due_date);
+        // If content exists for all fields
+        if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
 
-    // Get latest assignee (get their user id)
+            // Post the information to the server at route newTask
+            const response = await fetch(`/api/tasks/${task_id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ title, description, due_date, user_assigned_id }),
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
 
-    // Get the select element by its id
-    const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
-
-    // Get the data attribute of the selected option within the options list
-    const user_assigned_id = latestAssigneeSelectElement.value.trim();
-    
-
-    // Get the id for the task to delete
-    const task_id = editTaskModal.getAttribute('data-task-id');
-  
-
-    // If content exists for all fields
-    if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
-
-        // Post the information to the server at route newTask
-        const response = await fetch(`/api/tasks/${task_id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ title, description, due_date, user_assigned_id }),
-            headers: {
-                'Content-Type': 'application/JSON',
+            // If its an ok response refresh and load homepage again with new task
+            if (response.ok) {
+                document.location.replace('/');
             }
-        });
-        // If its an ok response refresh and load homepage again with new task
-        if (response.ok) {
-            document.location.replace('/');
+            
+            // If it fails, notify them
+            else {
+                alert('Failed to Create Task. Please check that your date is a valid one.');
+            }
         }
-        // If it fails, notify them
+        // If no content exists when posting, alert them to fill it out first
+        else if (date_is_valid_format===false) {
+            alert('Please make sure you enter the due date in the proper DD/MM/YYYY Format');
+        }
         else {
-            alert('Failed to Create Task. Please check that your date is a valid one.');
+            alert('Please ensure all required fields have content existing prior to making an update!');
         }
-    }
-    // If no content exists when posting, alert them to fill it out first
-    else if (date_is_valid_format===false) {
-        alert('Please make sure you enter the due date in the proper DD/MM/YYYY Format');
-    }
-    else {
-        alert('Please ensure all required fields have content existing prior to making an update!');
-    }
-};
-
+    };
 
 /* ------------------------------- Delete Task (DELETE) ------------------------------ */
 
-// When delete button is clicked, delete the task from the db
-const deleteTask = async (event) => {
+    // When delete button is clicked, delete the task from the db
+    const deleteTask = async (event) => {
 
-    // Prevent Default
-    event.preventDefault();
+        // Prevent Default
+        event.preventDefault();
 
-    // clear variables in case of loops not closed ever somehow
-    let deleteButton;
-    let task_id;
+        // clear variables in case of loops not closed ever somehow
+        let deleteButton;
+        let task_id;
 
-    // Get the id for the task on which the delete button was clicked
 
-    // Get the delete-id data attribute from this delete button
+        // Call out the button clicked & get the id
+        deleteButton = event.currentTarget
+        task_id = deleteButton.getAttribute('data-delete-id');
+    
 
-    // Call out the button clicked & get the id
-    deleteButton = event.currentTarget
-    task_id = deleteButton.getAttribute('data-delete-id');
-   
-
-    // delete the task by id
-    try {
-        // Post the information
-        const response = await fetch(`/api/tasks/${task_id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/JSON',
+        // delete the task by id
+        try {
+            // Post the information
+            const response = await fetch(`/api/tasks/${task_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
+            // If its an ok response load the latest dash again
+            if (response.ok) {
+                alert(`Task Deleted`);
+                document.location.replace('/');
             }
-        });
-        // If its an ok response load the latest dash again
-        if (response.ok) {
-            alert(`Task Deleted`);
-            document.location.replace('/');
-        }
-        // If it fails, notify them
-        else {
-            alert('Failed to Delete Task')
-            return;
-        }
-    }
-    // If no content exists when posting, alert them to fill it out first
-    catch {
-        alert('Unable to delete task');
-    }
-
-};
-
-/* ------------------------------ Post Comments (POST) ------------------------------ */
-
-// When the comment button is clicked (from within the comment modal, not the little comment icon that renders the modal...)
-const commentTask = async (event) => {
-
-    // Prevent Default
-    event.preventDefault();
-
-    // Call out the button clicked
-    const postCommentButton = event.currentTarget
-
-    // Go to commant modal grandparent 
-    const commentModal = postCommentButton.parentElement.parentElement.parentElement.parentElement;
-
-    // Get the value of the comment from that modal div using qS scoped to comment modal
-    const comment = commentModal.querySelector('.new-comment').value.trim();
-
-    // Get the task id the comment is for
-    const task_id = commentModal.getAttribute('data-task-id');
-
-    // Get user id for who is submitting blog (who is logged in)
-    // const user_id = commentModal.getAttribute('data-commenter-id');
-    // console.log(user_id);
-
-    // If content exists, Put it to the server...
-    if (comment && task_id) {
-        // Post the information
-        const response = await fetch(`/api/comments`, {
-            method: 'POST',
-            body: JSON.stringify({ comment, task_id }),
-            headers: {
-                'Content-Type': 'application/JSON',
+            // If it fails, notify them
+            else {
+                alert('Failed to Delete Task')
+                return;
             }
-        });
-        // If its an ok response load the latest dash again
-        if (response.ok) {
-            alert('Comment Posted!');
-            document.location.replace('/');
         }
-        // If it fails, notify them
-        else {
-            alert('Uh Ohhh... Failed to post comment. ')
+        // If no content exists when posting, alert them to fill it out first
+        catch {
+            alert('Unable to delete task');
         }
-    }
 
-    // If no content exists when posting, alert them to fill it out first
-    else {
-        alert('Please ensure you have content filled out to update. Content cannot be blank.');
-    }
-};
+    };
+
+    /* ------------------------------ Post Comments (POST) ------------------------------ */
+
+    // When the comment button is clicked (from within the comment modal, not the little comment icon that renders the modal...)
+    const commentTask = async (event) => {
+
+        // Prevent Default
+        event.preventDefault();
+
+        // Call out the button clicked
+        const postCommentButton = event.currentTarget
+
+        // Go to commant modal grandparent 
+        const commentModal = postCommentButton.parentElement.parentElement.parentElement.parentElement;
+
+        // Get the value of the comment from that modal div using qS scoped to comment modal
+        const comment = commentModal.querySelector('.new-comment').value.trim();
+
+        // Get the task id the comment is for
+        const task_id = commentModal.getAttribute('data-task-id');
+
+        // If content exists, Put it to the server...
+        if (comment && task_id) {
+            // Post the information
+            const response = await fetch(`/api/comments`, {
+                method: 'POST',
+                body: JSON.stringify({ comment, task_id }),
+                headers: {
+                    'Content-Type': 'application/JSON',
+                }
+            });
+            // If its an ok response load the latest dash again
+            if (response.ok) {
+                alert('Comment Posted!');
+                document.location.replace('/');
+            }
+            // If it fails, notify them
+            else {
+                alert('Uh Ohhh... Failed to post comment. ')
+            }
+        }
+
+        // If no content exists when posting, alert them to fill it out first
+        else {
+            alert('Please ensure you have content filled out to update. Content cannot be blank.');
+        }
+    };
 
 /* -------------------------------------------------------------------------- */
 /*                            Define Event Handlers                           */
@@ -393,44 +397,42 @@ const commentTask = async (event) => {
 
 /* -------------------- Mark Task Complete or Incomplete -------------------- */
 
-// Define a variable that holds all instances of checkmark button
-    // This is done at top of script when I check if the come in from server
-
-// Loop through this array of buttons and add an event listner to each of them to run edit blog function
-checkmarkButtons.forEach(function (el) {
-    el.addEventListener('click', updateCompletionStatus)
-})
-
+    // Defined at script top, a variable that holds all instances of checkmark button (this is what I use below)
+    
+    // Loop through this array of buttons and add an event listner to each of them to run edit blog function
+    checkmarkButtons.forEach(function (el) {
+        el.addEventListener('click', updateCompletionStatus)
+    })
 
 /* -------------------------------- Edit Task ------------------------------- */
 
-// Define a variable that holds all instances of Update Blog Buttons (within edit modals)
-const updateButtons = document.querySelectorAll('.update-task-button');
+    // Define a variable that holds all instances of Update Blog Buttons (within edit modals)
+    const updateButtons = document.querySelectorAll('.update-task-button');
 
-// Loop through this array of buttons and add an event listner to each of them to run edit blog function
-updateButtons.forEach(function (el) {
-    el.addEventListener('click', updateTask)
-})
+    // Loop through this array of buttons and add an event listner to each of them to run edit blog function
+    updateButtons.forEach(function (el) {
+        el.addEventListener('click', updateTask)
+    })
 
 /* ------------------------------- Delete Task ------------------------------ */
 
-// Define a variable that holds all instances of buttons with class delete-task
-const deleteTaskButtons = document.querySelectorAll('.delete-task');
+    // Define a variable that holds all instances of buttons with class delete-task
+    const deleteTaskButtons = document.querySelectorAll('.delete-task');
 
-// Loop through this array of buttons and add an event listner to each of them to run deleteTask function
-deleteTaskButtons.forEach(function (el) {
-    el.addEventListener('click', deleteTask)
-});
+    // Loop through this array of buttons and add an event listner to each of them to run deleteTask function
+    deleteTaskButtons.forEach(function (el) {
+        el.addEventListener('click', deleteTask)
+    });
 
 /* ------------------------------ Post Task Comment ------------------------------ */
 
-// Define a variable that holds all instances of buttons with class delete-blog
-const taskCommentButtons = document.querySelectorAll('.comment-task');
+    // Define a variable that holds all instances of buttons with class delete-blog
+    const taskCommentButtons = document.querySelectorAll('.comment-task');
 
-// Loop through this array of buttons and add an event listner to each of them to run edit blog function
-taskCommentButtons.forEach(function (el) {
-    el.addEventListener('click', commentTask)
-});
+    // Loop through this array of buttons and add an event listner to each of them to run edit blog function
+    taskCommentButtons.forEach(function (el) {
+        el.addEventListener('click', commentTask)
+    });
 
 
 
