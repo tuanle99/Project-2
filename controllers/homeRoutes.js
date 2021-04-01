@@ -1,9 +1,8 @@
-
 /* -------------------------------------------------------------------------- */
 /*                             Import Dependencies                            */
 /* -------------------------------------------------------------------------- */
-const router = require("express").Router();
-const { User, Task, Project, Comment, Finance } = require("../models");
+const router = require('express').Router();
+const { User, Task, Project, Comment, Finance } = require('../models');
 // const withAuth = require("../utils/auth");
 
 /* -------------------------------------------------------------------------- */
@@ -17,23 +16,21 @@ const { User, Task, Project, Comment, Finance } = require("../models");
 // Route to render home page with latest task data
 // First time site visit with no prior login return dash_home with no create / edit options
 router.get('/', async (req, res) => {
-
   try {
     // Get the data from the blogs DB
     const taskData = await Task.findAll({
       order: [['due_date', 'ASC']],
       include: [
         {
-          model: User
+          model: User,
         },
         {
-          model: Project
+          model: Project,
         },
         {
-          model: Comment
-        }
+          model: Comment,
+        },
       ],
-    
     });
 
     // This wasnt working so I will come back to it as a separate kanban issue- rj
@@ -43,24 +40,25 @@ router.get('/', async (req, res) => {
 
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
+    const projectDate = await Project.findAll();
 
     // Serialize data so the template can read it
     const tasks = taskData.map((task) => task.get({ plain: true }));
     const users = userData.map((user) => user.get({ plain: true }));
-  
+    const projects = projectDate.map((project) => project.get({ plain: true }));
 
     // Pass serialized data and session flag into db
     res.render('homepage', {
       tasks,
       users,
+      projects,
       logged_in: req.session.logged_in,
-     // currentUser
+      // currentUser
     });
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 
 /*
   // Use withAuth middleware to prevent access to route
@@ -82,28 +80,27 @@ router.get('/', async (req, res) => {
     }
   });
 */
-router.get("/finance", (req, res) => {
-  let dataArr = []
-  Finance.findAll({})
-    .then(result => {
-      console.log(result[0].dataValues)
-      for(i=0; i<result.length; i++){
-        dataArr.push(result[i].dataValues)
-      }
-      let hbsObj = {
-        finance: dataArr
-      }
-      res.render("finance", hbsObj)
-    })
-})
-router.get("/login", (req, res) => {
+router.get('/finance', (req, res) => {
+  let dataArr = [];
+  Finance.findAll({}).then((result) => {
+    console.log(result[0].dataValues);
+    for (i = 0; i < result.length; i++) {
+      dataArr.push(result[i].dataValues);
+    }
+    let hbsObj = {
+      finance: dataArr,
+    };
+    res.render('finance', hbsObj);
+  });
+});
+router.get('/login', (req, res) => {
   // If the user is already logged in, redirect to homepage
   if (req.session.logged_in) {
-    res.redirect("/");
+    res.redirect('/');
     return;
   }
 
-  res.render("login");
+  res.render('login');
 });
 
 /* ------------------------------- POST Routes ------------------------------ */
