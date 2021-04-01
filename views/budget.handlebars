@@ -1,45 +1,102 @@
 <!--New Expense Button-->
 <div class="bg-secondary text-white text-center mb-2 d-flex justify-content-center">
-    <button type="button" class="btn btn-sm btn-info my-3" data-bs-toggle="modal" data-bs-target="#new-expense-button">New
+    <button type="button" class="btn btn-sm btn-info my-3" data-bs-toggle="modal"
+        data-bs-target="#new-budget-button">New
         Expense</button>
 </div>
+
+<!-- Modal (Hidden) -->
+<div class="modal fade mt-5" id="new-budget-button" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
+            <form class="p-2">
+                <div class="mb-3">
+                    <label for="budget-name" class="form-label fw-bolder">Expense Title </label>
+                    <input type="text" class="form-control new-budget-title" id="new-budget-title"
+                        placeholder="Enter Expense Title">
+                </div>
+                <div class="mb-3">
+                    <label for="budgetinput" class="form-label fw-bolder">Expense Frequency</label>
+                    <input type="text" class="form-control new-budget-frequency" id="new-budget-frequency"
+                        placeholder="Enter Budget Frequency">
+                    <div id="passwordHelpBlock" class="form-text">
+                        Please enter Monthly, Weekly, or Daily
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="budgetinputamt" class="form-label fw-bolder">Expense Amount</label>
+                    <input type="text" class="form-control new-budget-amount" id="new-budget-amount"
+                        placeholder="Enter Expense Amount">
+                    <div id="passwordHelpBlock" class="form-text">
+                        Please enter in the form of a number, without $
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="create-new-expense" class="btn btn-info">Create New Expense</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- -------------------- Main Container For Budget/Expense Rows --------------------- -->
 
 <div class="container">
 
     <!--STATIC TASK HEADER ROW- DONT TOUCH THESE THEY ARE STATIC!-->
     <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
-        <div class="col-md-4 d-flex justify-content-center ">
+        <div class="col-md-3 d-flex justify-content-center ">
             <span>
                 Expense Title
             </span>
         </div>
-        <div class="col-md-4 d-flex justify-content-center">
+        <div class="col-md-3 d-flex justify-content-center">
             <span>
                 Frequency
             </span>
         </div>
-        <div class="col-md-4 d-flex justify-content-center">
+        <div class="col-md-3 d-flex justify-content-center">
             <span class="text-center d-flex justify-content-center">
                 Amount
             </span>
         </div>
+        <div class="col-md-3 d-flex justify-content-center">
+            <span class="text-center d-flex justify-content-center">
+                Update/Delete
+            </span>
+        </div>
     </div>
 
-    <!--DYNAMIC TASK ROW-->
+    <!--DYNAMIC BUDGET ROW-->
     {{#each budgets as |budget|}}
 
     <div class="row align-items-center shadow-sm my-2">
-        <div class="col-md-4 d-flex justify-content-center ">
+        <div class="col-md-3 d-flex justify-content-center ">
             <h6>{{budget.category}}</h6>
         </div>
-        <div class="col-md-4 d-flex justify-content-center ">
+        <div class="col-md-3 d-flex justify-content-center ">
             <h6>{{budget.frequency}}</h6>
         </div>
-        <div class="col-md-4 d-flex justify-content-center ">
-            <h6>{{budget.amount}}</h6>
+        <div class="col-md-3 d-flex justify-content-center ">
+            <h6>${{budget.amount}}</h6>
+        </div>
+        <div class="col-md-3 d-flex justify-content-center ">
+            <button type="button" class="btn btn-outline-primary mb-3 mx-1 shadow-sm" data-bs-toggle="modal"
+                data-bs-target="#edit-modal-{{budget.id}}">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+            <!--Delete Task Button-->
+            <button type="button" class="delete-expense btn btn-outline-danger mb-3 mx-1 shadow-sm"
+                data-delete-id="{{budget.id}}">
+                <i class="far fa-trash-alt"></i>
+            </button>
         </div>
     </div>
 
     {{/each}}
 
 </div>
+
+<script src="/js/budget.js"></script>
