@@ -1,202 +1,239 @@
 <!-- ------------------ New Task Button and Hidden Modal ------------------- -->
 
-    <!--New Task Button-->
-    <div class="bg-secondary text-white text-center mb-2 d-flex justify-content-center">
-        <button type="button" class="btn btn-sm btn-info my-3" data-bs-toggle="modal" data-bs-target="#new-task-button">New Task</button>
-    </div>
+<!--New Task Button-->
+<div class="bg-secondary text-white text-center mb-2 d-flex justify-content-center">
+    <button type="button" class="btn btn-sm btn-info my-3" data-bs-toggle="modal" data-bs-target="#new-task-button">New
+        Task</button>
+</div>
 
-    <!-- Modal (Hidden) -->
-    <div class="modal fade mt-5" id="new-task-button" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
-                <form class="p-2">
-                    <div class="mb-3">
-                        <label for="task-name" class="form-label fw-bolder">Task Name</label>
-                        <input type="text" class="form-control new-blog-title" id="new-task-title" placeholder="Enter Task Name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="contentinput" class="form-label fw-bolder">Description</label>
-                        <textarea class="form-control new-blog-content" id="new-task-description" placeholder="Enter Task Description" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="titleinput" class="form-label fw-bolder">Due Date</label>
-                        <!--VALIDATION REQUIRED ON DATE TYPE-->
-                        <input type="text" class="form-control new-blog-title" id="new-task-due-date" placeholder="Enter Due Date">
-                        <div id="passwordHelpBlock" class="form-text">
-                           Please enter your date in format MM / DD / YYYY
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="assignee" class="form-label fw-bolder">Assignee</label>
-                        {{#each users as |user|}}
-                        <div class="form-check">
-                            <input class="form-check-input" name="assigneeS" type="radio" id="userChoice{{user.id}}" value="{{user.id}}">
-                            <label class="form-check-label" for="userChoice{{user.id}}">
-                              {{user.name}}
-                            </label>
-                          </div>
-                        {{/each}}
-                    </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id = "create-new-task" class="btn btn-info">Create Task</button>
+<!-- Modal (Hidden) -->
+<div class="modal fade mt-5" id="new-task-button" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
+            <form class="p-2">
+                <div class="mb-3">
+                    <label for="task-name" class="form-label fw-bolder">Task Name</label>
+                    <input type="text" class="form-control new-blog-title" id="new-task-title"
+                        placeholder="Enter Task Name">
                 </div>
+                <div class="mb-3">
+                    <label for="contentinput" class="form-label fw-bolder">Description</label>
+                    <textarea class="form-control new-blog-content" id="new-task-description"
+                        placeholder="Enter Task Description" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="titleinput" class="form-label fw-bolder">Due Date</label>
+                    <!--VALIDATION REQUIRED ON DATE TYPE-->
+                    <input type="text" class="form-control new-blog-title" id="new-task-due-date"
+                        placeholder="Enter Due Date">
+                    <div id="passwordHelpBlock" class="form-text">
+                        Please enter your date in format MM / DD / YYYY
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="assignee" class="form-label fw-bolder">Assignee</label>
+                    {{#each users as |user|}}
+                    <div class="form-check">
+                        <input class="form-check-input" name="assigneeS" type="radio" id="userChoice{{user.id}}"
+                            value="{{user.id}}">
+                        <label class="form-check-label" for="userChoice{{user.id}}">
+                            {{user.name}}
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+                <div class="mb-3">
+                    <label for="assignee" class="form-label fw-bolder">Assigned to Project:</label>
+                    {{#each projects as |project|}}
+                    <div class="form-check">
+                        <input class="form-check-input" name="assigneeProject" type="radio"
+                            id="projectChoice{{project.id}}" value="{{project.id}}">
+                        <label class="form-check-label" for="projectChoice{{project.id}}">
+                            {{project.title}}
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="create-new-task" class="btn btn-info">Create Task</button>
             </div>
         </div>
     </div>
+</div>
 
 <!-- -------------------- Main Container For Task Rows --------------------- -->
 
 
-    <div class="container">
+<div class="container">
 
-        <!--STATIC TASK HEADER ROW- DONT TOUCH THESE THEY ARE STATIC!-->
-        <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
-            <div class="col-md-2 d-flex justify-content-center ">
-                <span>
-                    Task Options
-                </span>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center">
-                <span>
-                    Task
-                </span>
-            </div>
-            <div class="col-md-2 d-flex justify-content-center">
-                <span class="text-center d-flex justify-content-center">
-                    Due Date
-                </span>
-            </div>
-            <div class="col-md-2 ">
-                <span>
-                    Assignee
-                </span>
-            </div>
+    <!--STATIC TASK HEADER ROW- DONT TOUCH THESE THEY ARE STATIC!-->
+    <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
+        <div class="col-md-2 d-flex justify-content-center ">
+            <span>
+                Task Options
+            </span>
         </div>
-
-
-        <!--DYNAMIC TASK ROW-->
-        {{#each tasks as |task|}}
-
-        <div class="row align-items-center shadow-sm my-2">
-            <div class="col-md-1 d-flex justify-content-center ">
-                <button type="button" class="btn btn-sm btn-outline-info my-3" data-bs-toggle="collapse"
-                    data-bs-target="#ids{{task.id}}" aria-expanded="false">
-                    Details
-                </button>
-            </div>
-            <div class="col-md-1 px-1 d-flex justify-content-center">
-                <button type="button" class="btn set-complete-incomplete btn-sm btn-outline-success my-3" data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center">
-               <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}" readonly>
-            </div>
-            <div class="col-md-2 d-flex justify-content-center">
-                <span class="text-center d-flex justify-content-center task-due-dates" data-complete-state={{task.is_complete}}>
-                    {{format_date task.due_date}}
-                </span>
-            </div>
-            <div class="col-md-2">
-                <span>
-                    {{task.user.name}}
-                </span>
-            </div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <span>
+                Task
+            </span>
         </div>
-        <!--Collapsable Details View (collapsed via details button)-->
-        <div class="collapse" id="ids{{task.id}}">
-            <div class="card mt-1 p-0">
-                <div class="card-body">
-                    <div>
-                        <!--Comment Task Button-->
-                        <button type="button" class=" btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#commentModal{{task.id}}">
-                            <i class="far fa-comment"></i>
-                        </button>
-                            <!--Modal to Render Upon Comment (Hidden)-->
-                            <div class="modal comment-modal fade mt-5" data-commenter-id="{{current_user}}" data-task-id="{{task.id}}" id="commentModal{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <!--Modal Content-->
-                                    <div class="modal-content">
-                                        <form class="p-2">
-                                            <div class="mb-3">
-                                                <label for="contentinput" class="form-label fw-bolder">Comment</label>
-                                                <textarea class="form-control new-comment" placeholder="Enter Comment..."rows="3"></textarea>
-                                            </div>
-                                        </form>
-                                        <!--Modal Footer With Buttons-->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="btn btn-outline-info comment-task">Comment</button>
-                                        </div>
+        <div class="col-md-2 d-flex justify-content-center">
+            <span class="text-center d-flex justify-content-center">
+                Due Date
+            </span>
+        </div>
+        <div class="col-md-2 ">
+            <span>
+                Assignee
+            </span>
+        </div>
+    </div>
+
+
+    <!--DYNAMIC TASK ROW-->
+    {{#each tasks as |task|}}
+
+    <div class="row align-items-center shadow-sm my-2">
+        <div class="col-md-1 d-flex justify-content-center ">
+            <button type="button" class="btn btn-sm btn-outline-info my-3" data-bs-toggle="collapse"
+                data-bs-target="#ids{{task.id}}" aria-expanded="false">
+                Details
+            </button>
+        </div>
+        <div class="col-md-1 px-1 d-flex justify-content-center">
+            <button type="button" class="btn set-complete-incomplete btn-sm btn-outline-success my-3"
+                data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+            <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}" readonly>
+        </div>
+        <div class="col-md-2 d-flex justify-content-center">
+            <span class="text-center d-flex justify-content-center task-due-dates"
+                data-complete-state={{task.is_complete}}>
+                {{format_date task.due_date}}
+            </span>
+        </div>
+        <div class="col-md-2">
+            <span>
+                {{task.user.name}}
+            </span>
+        </div>
+    </div>
+    <!--Collapsable Details View (collapsed via details button)-->
+    <div class="collapse" id="ids{{task.id}}">
+        <div class="card mt-1 p-0">
+            <div class="card-body">
+                <div>
+                    <!--Comment Task Button-->
+                    <button type="button" class=" btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal"
+                        data-bs-target="#commentModal{{task.id}}">
+                        <i class="far fa-comment"></i>
+                    </button>
+                    <!--Modal to Render Upon Comment (Hidden)-->
+                    <div class="modal comment-modal fade mt-5" data-commenter-id="{{current_user}}"
+                        data-task-id="{{task.id}}" id="commentModal{{task.id}}" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <!--Modal Content-->
+                            <div class="modal-content">
+                                <form class="p-2">
+                                    <div class="mb-3">
+                                        <label for="contentinput" class="form-label fw-bolder">Comment</label>
+                                        <textarea class="form-control new-comment" placeholder="Enter Comment..."
+                                            rows="3"></textarea>
                                     </div>
+                                </form>
+                                <!--Modal Footer With Buttons-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-outline-info comment-task">Comment</button>
                                 </div>
                             </div>
-                        <!--Edit Task Button-->
-                        <button type="button" class="btn btn-outline-primary mb-3 mx-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#edit-modal-{{task.id}}">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                            <!-- Edit Task Modal (Hidden) -->
-                            <div class="modal fade mt-5" id="edit-modal-{{task.id}}" data-task-id="{{task.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
-                                        <form class="p-2">
-                                            <div class="mb-3">
-                                                <label for="task-name" class="form-label fw-bolder">Task Name</label>
-                                                <input type="text" class="updated-task-title form-control new-blog-title" placeholder="Enter Task Name" value="{{task.title}}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="contentinput" class="form-label fw-bolder">Description</label>
-                                                <textarea class=" updated-task-description form-control" placeholder="Enter Task Description" rows="3">
+                        </div>
+                    </div>
+                    <!--Edit Task Button-->
+                    <button type="button" class="btn btn-outline-primary mb-3 mx-1 shadow-sm" data-bs-toggle="modal"
+                        data-bs-target="#edit-modal-{{task.id}}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <!-- Edit Task Modal (Hidden) -->
+                    <div class="modal fade mt-5" id="edit-modal-{{task.id}}" data-task-id="{{task.id}}"
+                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
+                                <form class="p-2">
+                                    <div class="mb-3">
+                                        <label for="task-name" class="form-label fw-bolder">Task Name</label>
+                                        <input type="text" class="updated-task-title form-control new-blog-title"
+                                            placeholder="Enter Task Name" value="{{task.title}}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contentinput" class="form-label fw-bolder">Description</label>
+                                        <textarea class=" updated-task-description form-control"
+                                            placeholder="Enter Task Description" rows="3">
 {{task.description}}                                                   
                                                 </textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="titleinput" class="form-label fw-bolder">Due Date</label>
-                                                <!--VALIDATION REQUIRED ON DATE TYPE-->
-                                                <input type="text" class="form-control updated-task-due_date" placeholder="Enter Due Date" value="{{format_date task.due_date}}">
-                                                <div id="dateEntryHelp" class="form-text">
-                                                Please enter your date in format MM / DD / YYYY
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                 <label for="currentAssignee{{task.id}}" class="updated-task-assignee form-label fw-bolder">Assignee</label>
-                                            <div>
-                                                <select id="currentAssignee{{task.id}}" class="form-select current-assignee">
-                                                    <option value="{{task.user.id}}">{{task.user.name}}</option>
-                                                    {{#users}}                                                   
-                                                    <option value="{{task.user.id}}">{{user.name}}</option>
-                                                    {{/users}}
-                                                </select>
-                                            </div>
-                                            </div>
-                                        </form>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="button" class="update-task-button btn btn-outline-primary">Update Task</button>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="titleinput" class="form-label fw-bolder">Due Date</label>
+                                        <!--VALIDATION REQUIRED ON DATE TYPE-->
+                                        <input type="text" class="form-control updated-task-due_date"
+                                            placeholder="Enter Due Date" value="{{format_date task.due_date}}">
+                                        <div id="dateEntryHelp" class="form-text">
+                                            Please enter your date in format MM / DD / YYYY
                                         </div>
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="currentAssignee{{task.id}}"
+                                            class="updated-task-assignee form-label fw-bolder">Assignee</label>
+                                        <div>
+                                            <select id="currentAssignee{{task.id}}"
+                                                class="form-select current-assignee">
+                                                <option value="{{task.user.id}}">{{task.user.name}}</option>
+                                                {{#users}}
+                                                <option value="{{task.user.id}}">{{user.name}}</option>
+                                                {{/users}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="update-task-button btn btn-outline-primary">Update
+                                        Task</button>
                                 </div>
                             </div>
-                        <!--Delete Task Button-->
-                        <button type="button" class=" delete-task btn btn-outline-danger mb-3 mx-1 shadow-sm" data-delete-id="{{task.id}}">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
+                        </div>
                     </div>
-                    <h5 class="card-title">Description</h5>
-                    <p class="card-text">"{{task.description}}"</p>
-                    <h5 class="card-title">Comments</h5>
-                    <ul>
-                        {{#each task.comments as |comment|}}
-                        <li>{{comment.comment}} -- User {{comment.user_id}}</li>
-                        {{/each}}
-                    </ul>
+                    <!--Delete Task Button-->
+                    <button type="button" class=" delete-task btn btn-outline-danger mb-3 mx-1 shadow-sm"
+                        data-delete-id="{{task.id}}">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
                 </div>
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">"{{task.description}}"</p>
+                <h5 class="card-title">Comments</h5>
+                <ul>
+                    {{#each task.comments as |comment|}}
+                    <li>{{comment.comment}} -- User {{comment.user_id}}</li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
-
-        {{/each}}
-
     </div>
+
+    {{/each}}
+
+</div>
 
 <!-- Scripts -->
 <script src="/js/homepage.js"></script>
+<script src="/js/newTask.js"></script>
