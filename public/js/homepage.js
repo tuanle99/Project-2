@@ -237,8 +237,6 @@
         // Prevent Default
         event.preventDefault();
 
-        // Define Items to Get and Manipulate
-
         // Call out the button clicked
         updateButton = event.currentTarget;
 
@@ -259,17 +257,16 @@
 
         // Get latest assignee (get their user id)
 
-        // Get the select element by its id
-        const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
+            // Get the select element by its id
+            const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
 
-        // Get the data attribute of the selected option within the options list
-        const user_assigned_id = latestAssigneeSelectElement.value.trim();
+            // Get the data attribute of the selected option within the options list
+            const user_assigned_id = latestAssigneeSelectElement.value.trim();
         
 
         // Get the id for the task to delete
         const task_id = editTaskModal.getAttribute('data-task-id');
     
-
         // If content exists for all fields
         if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
 
@@ -281,10 +278,12 @@
                     'Content-Type': 'application/JSON',
                 }
             });
+
             // If its an ok response refresh and load homepage again with new task
             if (response.ok) {
                 document.location.replace('/');
             }
+            
             // If it fails, notify them
             else {
                 alert('Failed to Create Task. Please check that your date is a valid one.');
