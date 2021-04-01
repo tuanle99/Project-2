@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
   try {
     // Get the data from the blogs DB
     const taskData = await Task.findAll({
+      order: [['due_date', 'ASC']],
       include: [
         {
           model: User
@@ -32,23 +33,28 @@ router.get('/', async (req, res) => {
           model: Comment
         }
       ],
+    
     });
+
+    // This wasnt working so I will come back to it as a separate kanban issue- rj
+    // const currentUser = await User.findOne({
+    //   where:{id:req.session.user_id}
+    // });
 
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
 
     // Serialize data so the template can read it
     const tasks = taskData.map((task) => task.get({ plain: true }));
-    console.log(tasks);
-
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log(users)
+  
 
     // Pass serialized data and session flag into db
     res.render('homepage', {
       tasks,
       users,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
+     // currentUser
     });
   }
   catch (err) {

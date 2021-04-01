@@ -1,0 +1,45 @@
+<!--New Expense Button-->
+<div class="bg-secondary text-white text-center mb-2 d-flex justify-content-center">
+    <button type="button" class="btn btn-sm btn-info my-3" data-bs-toggle="modal" data-bs-target="#new-expense-button">New
+        Expense</button>
+</div>
+
+<div class="container">
+
+    <!--STATIC TASK HEADER ROW- DONT TOUCH THESE THEY ARE STATIC!-->
+    <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
+        <div class="col-md-4 d-flex justify-content-center ">
+            <span>
+                Expense Title
+            </span>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <span>
+                Frequency
+            </span>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+            <span class="text-center d-flex justify-content-center">
+                Amount
+            </span>
+        </div>
+    </div>
+
+    <!--DYNAMIC TASK ROW-->
+    {{#each budgets as |budget|}}
+
+    <div class="row align-items-center shadow-sm my-2">
+        <div class="col-md-4 d-flex justify-content-center ">
+            <h6>{{budget.category}}</h6>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center ">
+            <h6>{{budget.frequency}}</h6>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center ">
+            <h6>{{budget.amount}}</h6>
+        </div>
+    </div>
+
+    {{/each}}
+
+</div>
