@@ -1,10 +1,11 @@
+{{#if logged_in}}
 <div class="profile_wrap">
   <div class="fluid-container profile_container">
     <div class="profile_title profile_background">
       <h2>Welcome, {{current_user.dataValues.name}} !</h2>
     </div>
-    <div class="profile_titleContainer">
-      <h4>Family Member</h4>
+    <div class="profile_titleContainer btn-info">
+      <h4 class="">Family Member</h4>
     </div>
     {{#each users as |user|}}
     {{!-- get all family member except for the user themselves --}}
@@ -21,24 +22,123 @@
     {{/if_not_eq}}
     {{/each}}
     <div class="profile_background">
-      <div class="profile_titleContainer">
+      <div class="profile_titleContainer btn-info">
         <h4>Current Task:</h4>
       </div>
       {{#each tasks as |task|}}
-      <div class="row">
-        <div class="col-6 ">
-          <h5>{{task.dataValues.title}}</h5>
+
+
+      <div class="row align-items-center shadow-sm my-2">
+        <div class="col-md-1 d-flex justify-content-center ">
+          <button type="button" class="btn btn-sm btn-outline-info my-3" data-bs-toggle="collapse"
+            data-bs-target="#ids{{task.id}}" aria-expanded="false">
+            Details
+          </button>
         </div>
-        <div class="col-6 profile_alignText">
-          <p>Assigned by {{task.user.dataValues.name}} on {{format_date task.dataValues.due_date}}</p>
+        <div class="col-md-1 px-1 d-flex justify-content-center">
+          <button type="button" class="btn set-complete-incomplete btn-sm btn-outline-success my-3"
+            data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+          <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
+        </div>
+        <div class="col-md-2 d-flex justify-content-center">
+          <span class="text-center d-flex justify-content-center">
+            {{format_date task.due_date}}
+          </span>
+        </div>
+        <div class="col-md-2">
+          <span>
+            {{task.user.name}}
+          </span>
         </div>
       </div>
-      <div class="row">
-        <div class="col-auto">
-          <p>{{task.dataValues.description}}</p>
+      <!--Collapsable Details View (collapsed via details button)-->
+      <div class="collapse" id="ids{{task.id}}">
+        <div class="card mt-1 p-0">
+          <div class="card-body">
+            <div>
+              <!--Edit Task Button-->
+              <button type="button" class="btn btn-outline-info mb-3 mx-1 shadow-sm" data-bs-toggle="modal"
+                data-bs-target="#edit-modal-{{task.id}}">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <!-- Edit Task Modal (Hidden) -->
+              <div class="modal fade mt-5" id="edit-modal-{{task.id}}" data-task-id="{{task.id}}"
+                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
+                    <form class="p-2">
+                      <div class="mb-3">
+                        <label for="task-name" class="form-label fw-bolder">Task
+                          Name</label>
+                        <input type="text" class="updated-task-title form-control new-blog-title"
+                          placeholder="Enter Task Name" value="{{task.title}}">
+                      </div>
+                      <div class="mb-3">
+                        <label for="contentinput" class="form-label fw-bolder">Description</label>
+                        <textarea class=" updated-task-description form-control" placeholder="Enter Task Description"
+                          rows="3">
+{{task.description}}                                                   
+                                                </textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="titleinput" class="form-label fw-bolder">Due
+                          Date</label>
+                        <!--VALIDATION REQUIRED ON DATE TYPE-->
+                        <input type="text" class="form-control updated-task-due_date" placeholder="Enter Due Date"
+                          value="{{format_date task.due_date}}">
+                        <div id="dateEntryHelp" class="form-text">
+                          Please enter your date in format MM / DD / YYYY
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="currentAssignee{{task.id}}"
+                          class="updated-task-assignee form-label fw-bolder">Assignee</label>
+                        <div>
+                          <select id="currentAssignee{{task.id}}" class="form-select current-assignee">
+                            <option value="{{task.user.id}}">{{task.user.name}}</option>
+                            {{#users}}
+                            <option value="{{task.user.id}}">{{user.name}}</option>
+                            {{/users}}
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="button" class="update-task-button btn btn-outline-info">Update
+                        Task</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--Delete Task Button-->
+              <button type="button" class=" delete-task btn btn-outline-danger mb-3 mx-1 shadow-sm"
+                data-delete-id="{{task.id}}">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">"{{task.description}}"</p>
+            <h5 class="card-title">Comments</h5>
+            <ul>
+              {{#each task.comments as |comment|}}
+              <li>{{comment.comment}} -- User {{comment.user_id}}</li>
+              {{/each}}
+            </ul>
+          </div>
         </div>
       </div>
-      {{/each}}
+
+
     </div>
   </div>
+
+  {{/each}}
 </div>
+</div>
+</div>
+<script src="/js/homepage.js"></script>
+{{/if}}
