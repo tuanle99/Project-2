@@ -1,5 +1,51 @@
 # Project-2
 
+# Family manager 
+
+## Table of Contents 
+
+* [Overview](#Overview)
+* [Access](#Access)
+* [User Story](#User-Story)
+* [Details](#Details)
+* [Walk Through](#Walk-Through)
+* [Team](#Team)
+
+## Overview
+
+The Family manager (FM) application allows users to ...
+
+## Access
+
+You can find the deployed webpage here: ............................
+
+You can find the GitHub repo here: https://github.com/tuanle99/Project-2/pull/50
+
+## User Story
+
+AS a User
+
+I WANT to be able to get specific data from the family manager app, I want to get specific tasks assigned to me, I want to get all the information about the budget that will need to be spent.
+
+This application allows users 
+
+## Walk Through
+
+In order to use this application:
+
+1. Enter your 
+
+## Team
+
+This application was developed by the Regal swans team, consisting of four team members:
+* Tuan, @tuanle99
+* Charles, @charles198618
+* Sammy, @smcmillan28
+* Ryan, @wryanj
+
+
+
+
 Family Manager
 
 - User
@@ -11,31 +57,6 @@ Family Manager
 - Finance
     - montly spending
     - subscription
-
-    `Product`
-
-  * `id`
-  
-    * Integer.
-  
-    * Doesn't allow null values.
-  
-    * Set as primary key.
-  
-    * Uses auto increment.
-
-  * `Subscription`
-  
-    * Integer.
-  
-    * Doesn't allow null values.
-
-  * `Bonus`
-  
-    * integer.
-  
-    * Doesn't allow null values.
-  
 
 - Project
     - View a section of the to do list base on the project category
