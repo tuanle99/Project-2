@@ -5,13 +5,12 @@ const { User, Task, Comment, Project } = require('../../models');
 // Need update to current user after log in
 router.get('/', async (req, res) => {
   try {
-    const current_user = await User.findOne({ where: { id: 1 } });
-    const users = await User.findAll(
-      { offset: 2 },
-      {
-        attributes: { exclude: ['password'] },
-      }
-    );
+    const current_user = await User.findOne({
+      where: { id: req.session.user_id },
+    });
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] },
+    });
     const tasks = await Task.findAll({
       include: [
         {
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
           attributes: ['name'],
         },
       ],
-      where: { user_assigned_id: 1 },
+      where: { user_assigned_id: req.session.user_id },
     });
     //need current user
     res.render('profile', {
