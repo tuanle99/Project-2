@@ -1,5 +1,4 @@
 const router = require('express').Router();
-var sequelize = require('sequelize');
 const { User, Task, Comment, Project } = require('../../models');
 
 // Render profile page
@@ -7,9 +6,12 @@ const { User, Task, Comment, Project } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const current_user = await User.findOne({ where: { id: 1 } });
-    const users = await User.findAll({
-      attributes: { exclude: ['password'] },
-    });
+    const users = await User.findAll(
+      { offset: 2 },
+      {
+        attributes: { exclude: ['password'] },
+      }
+    );
     const tasks = await Task.findAll({
       include: [
         {
