@@ -72,7 +72,6 @@ const postNewTask = async (event) => {
     description &&
     due_date &&
     user_assigned_id &&
-    project_id &&
     date_is_valid_format === true
   ) {
     // Post the information to the server at route newTask (note server checks who its created by)
