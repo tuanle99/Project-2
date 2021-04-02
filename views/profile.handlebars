@@ -60,17 +60,17 @@
 <div class="container">
   <div class="fluid-container">
     <div class="profile_title profile_background">
-      <h2>Welcome, {{current_user.dataValues.name}} !</h2>
+      <h3 class="my-2">Welcome, {{current_user.dataValues.name}} !</h3>
     </div>
-    <div class="profile_titleContainer btn-info">
-      <h4 class="">Family Member</h4>
+    <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
+      <h4 class="px-4"><i class="fas fa-user-friends"></i>  My Family</h4>
     </div>
     {{#each users as |user|}}
     {{!-- get all family member except for the user themselves --}}
     {{#if_not_eq user.dataValues.name current_user.dataValues.name}}
     <div class="row">
       <div class="col-6">
-        <p>{{user.dataValues.role}}: {{user.dataValues.name}}
+        <p><i class="fas fa-male mx-2"></i><span class="fw-bold text-info">{{user.dataValues.role}}</span> | {{user.dataValues.name}}
           {{#if_not_eq user.dataValues.is_admin 0}}
           (admin)
           {{/if_not_eq}}
@@ -80,8 +80,8 @@
     {{/if_not_eq}}
     {{/each}}
     <div class="profile_background">
-      <div class="profile_titleContainer btn-info">
-        <h4>Current Task:</h4>
+      <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
+        <h4><i class="fas fa-tasks"></i>  My Tasks</h4>
       </div>
       {{#each tasks as |task|}}
 
@@ -97,7 +97,7 @@
             data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
         </div>
         <div class="col-md-6 d-flex justify-content-center">
-          <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
+          <input readonly type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
         </div>
         <div class="col-md-2 d-flex justify-content-center">
           <span class="text-center d-flex justify-content-center">

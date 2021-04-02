@@ -96,14 +96,17 @@
         {{#each projects as |project|}}
         <div class="card project_content_container">
             <div class="card-header">
-                <div class="row align-items-center shadow-sm my-2">
-                    <div class="col-md-11 d-flex justify-content-center ">
-                        <p>{{project.dataValues.title}} - Created by
-                            {{project.dataValues.user.dataValues.name}}
-                            on {{format_date project.dataValues.date_created}} </p>
+                <div class="row align-items-center text-center my-2">
+                    <div class="col-md-11">
+                        <div>
+                            <h5>{{project.dataValues.title}}</h5>
+                        </div>
+                        <div>
+                            Created by {{project.dataValues.user.dataValues.name}} on {{format_date project.dataValues.date_created}} 
+                        </div>
                     </div>
                     <div class="col-md-1 px-1 d-flex justify-content-center">
-                        <button type="button" class="delete-project btn btn-outline-danger mb-3 mx-1 shadow-sm"
+                        <button type="button" class="delete-project btn btn-sm btn-outline-danger mb-3 mx-1 shadow-sm"
                             value={{project.dataValues.id}}>
                             <i class="far fa-trash-alt"></i>
                         </button>
@@ -113,7 +116,7 @@
             <div class="card-body">
                 {{#each project.dataValues.tasks as |task|}}
 
-                <div class="row align-items-center shadow-sm my-2">
+                <div class="row align-items-center shadow-sm my-2 mx-1">
                     <div class="col-md-1 d-flex justify-content-center ">
                         <button type="button" class="btn btn-sm btn-outline-info my-3" data-bs-toggle="collapse"
                             data-bs-target="#ids{{task.id}}" aria-expanded="false">
@@ -125,7 +128,7 @@
                             data-complete-state={{task.is_complete}}><i class="fas fa-check tex"></i></button>
                     </div>
                     <div class="col-md-6 d-flex justify-content-center">
-                        <input type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
+                        <input readonly type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
                     </div>
                     <div class="col-md-2 d-flex justify-content-center">
                         <span class="text-center d-flex justify-content-center">

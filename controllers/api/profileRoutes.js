@@ -28,8 +28,6 @@ router.get('/', withAuth, async (req, res) => {
 
     const projects = await Project.findAll();
 
-    console.log(current_user);
-
     //need current user
     res.render('profile', {
       current_user,
