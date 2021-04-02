@@ -281,7 +281,7 @@
 
             // If its an ok response refresh and load homepage again with new task
             if (response.ok) {
-                document.location.replace('/');
+                document.location.reload();
             }
             
             // If it fails, notify them
@@ -328,7 +328,7 @@
             // If its an ok response load the latest dash again
             if (response.ok) {
                 alert(`Task Deleted`);
-                document.location.replace('/');
+                location.reload();
             }
             // If it fails, notify them
             else {
