@@ -20,11 +20,17 @@ router.get('/', async (req, res) => {
       ],
       where: { user_assigned_id: req.session.user_id },
     });
+
+    const projects = await Project.findAll();
+
+    console.log(current_user);
+
     //need current user
     res.render('profile', {
       current_user,
       tasks,
       users,
+      projects,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
