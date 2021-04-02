@@ -18,9 +18,10 @@ The Family manager (FM) application allows users to signup, and go to a specific
 
 ## Access
 
-You can find the deployed webpage here: ............................
+You can find the deployed webpage here: https://family-manager-application.herokuapp.com/
 
-You can find the GitHub repo here: https://github.com/tuanle99/Project-2/pull/50
+You can find the GitHub repo here: https://github.com/tuanle99/Project-2
+
 
 ## User Story
 
@@ -45,10 +46,11 @@ On the profile page, the user will be able to see the names of all family member
 We also have the project page. This one displays all the projects that were created in order, with all the details related to them. The parents are responsible for creating a new project or a new task and assign it to a specific child.
 In addition, we have the finance page. Basically, the children are able to view all the finance informations, but they are not allowed to update or delete them
 
-## Futur improvements
+## Future improvements
 
 1.  When it comes to improving this application, we want to prevent children from trying to update or delete projects, tasks, or finance informations.
-2. 
+![image](https://user-images.githubusercontent.com/72420733/113454053-5519bf80-93d5-11eb-9e77-b29f09314916.png)
+
 
 
 ## Team
