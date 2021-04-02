@@ -58,7 +58,7 @@
 
 <!--Below New Task Button and hidden div-->
 <div class="container">
-  <div class="fluid-container profile_container">
+  <div class="fluid-container">
     <div class="profile_title profile_background">
       <h2>Welcome, {{current_user.dataValues.name}} !</h2>
     </div>
@@ -190,11 +190,12 @@
         </div>
       </div>
 
-
+ {{/each}}
     </div>
+    
   </div>
 
-  {{/each}}
+ 
 </div>
 </div>
 </div>
