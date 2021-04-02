@@ -18,6 +18,10 @@ router.get('/', withAuth, async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Comment
+        }
+      
       ],
       where: { user_assigned_id: req.session.user_id },
     });
