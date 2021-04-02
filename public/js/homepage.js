@@ -286,7 +286,7 @@
             
             // If it fails, notify them
             else {
-                alert('Failed to Create Task. Please check that your date is a valid one.');
+                alert('Failed to update Task. Please check that your date is a valid one.');
             }
         }
         // If no content exists when posting, alert them to fill it out first

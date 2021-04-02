@@ -99,6 +99,8 @@ const updateBudget = async (event) => {
     // Prevent Default
     event.preventDefault();
 
+    let updateButton;
+
     // Call out the button clicked
     updateButton = event.currentTarget;
 
@@ -114,11 +116,10 @@ const updateBudget = async (event) => {
     // Get latest amount
     const amount = editBudgetModal.querySelector('.updated-budget-amount').value.trim();
 
-    // Get the id for the task to delete
     const budget_id = editBudgetModal.getAttribute('data-budget-id');
-
+    
     // If content exists for all fields
-    if ((title && description && due_date && user_assigned_id) && (date_is_valid_format === true)) {
+    if (category && frequency && amount) {
 
         // Post the information to the server at route newTask
         const response = await fetch(`/api/budget/${budget_id}`, {
