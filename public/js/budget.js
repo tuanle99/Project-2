@@ -31,7 +31,7 @@ const postNewExpense = async (event) => {
         });
         // If its an ok response refresh and load homepage again with new task
         if (response.ok) {
-            document.location.replace('/api/budget');
+            location.reload();
         }
         // If it fails, notify them
         else {
@@ -40,7 +40,7 @@ const postNewExpense = async (event) => {
     }
 
     else {
-        alert('Please ensure you have entered informatoin in all fields before creating!');
+        alert('Please ensure you have entered information in all fields before creating!');
     }
 };
 
@@ -77,7 +77,7 @@ const deleteExpense = async (event) => {
         // If its an ok response load the latest dash again
         if (response.ok) {
             alert(`Expense Deleted`);
-            document.location.replace('/api/budget');
+            location.reload();
         }
         // If it fails, notify them
         else {
@@ -92,12 +92,76 @@ const deleteExpense = async (event) => {
 
 };
 
+/* -------------------------------- Edit Budget (PUT) ------------------------------- */
+// Edit button renders when pencil is clicked in handlebars, then update budget button from modal triggers this...
+const updateBudget = async (event) => {
 
+    // Prevent Default
+    event.preventDefault();
+
+    let updateButton;
+
+    // Call out the button clicked
+    updateButton = event.currentTarget;
+
+    // Get to the parent Div to scope query selector for finding items within it by classname
+    const editBudgetModal = updateButton.parentElement.parentElement.parentElement.parentElement;
+
+    // Get the latest category
+    const category = editBudgetModal.querySelector('.updated-budget-category').value.trim();
+
+    // Get latest frequency
+    const frequency = editBudgetModal.querySelector('.updated-budget-frequency').value.trim();
+
+    // Get latest amount
+    const amount = editBudgetModal.querySelector('.updated-budget-amount').value.trim();
+
+    const budget_id = editBudgetModal.getAttribute('data-budget-id');
+    
+    // If content exists for all fields
+    if (category && frequency && amount) {
+
+        // Post the information to the server at route newTask
+        const response = await fetch(`/api/budget/${budget_id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ category, frequency, amount }),
+            headers: {
+                'Content-Type': 'application/JSON',
+            }
+        });
+
+        // If its an ok response refresh and load homepage again with new task
+        if (response.ok) {
+            location.reload();
+        }
+
+        // If it fails, notify them
+        else {
+            alert('Failed to Update Expense.');
+        }
+    }
+    else {
+        alert('Please ensure all required fields have content existing prior to making an update!');
+    }
+};
+
+
+// POST NEW EXPENSE
+// Grabbing newExpense button from document and calling post function when clicked
 document.querySelector('#create-new-expense').addEventListener('click', postNewExpense);
 
+// DELETE EXPENSE
+// Grabbing deleteExpense buttons
 const deleteExpenseButtons = document.querySelectorAll('.delete-expense');
-
 // Loop through this array of buttons and add an event listner to each of them to run deleteEvent function
 deleteExpenseButtons.forEach(function (el) {
     el.addEventListener('click', deleteExpense)
+});
+
+// UPDATE EXPENSE
+// Define a variable that holds all instances of Update Blog Buttons (within edit modals)
+const updateExpenseButtons = document.querySelectorAll('.update-expense-button');
+// Loop through this array of buttons and add an event listner to each of them to run edit blog function
+updateExpenseButtons.forEach(function (el) {
+    el.addEventListener('click', updateBudget)
 });

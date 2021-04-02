@@ -35,7 +35,7 @@ const signUpFormHandler = async (event) => {
 
         // If successful, alert them and then redirect them to the dashboard page
         if (response.ok) {
-            alert(`Your now signed up! Click ok to view blogs, create and edit your own blogs, and leave comments!`)
+            alert(`Your now signed up! Click ok to view tasks or projects, create and edit your own tasks and projects, and leave comments!`)
             document.location.replace('/');
         } 
         else {

@@ -286,12 +286,12 @@
             
             // If it fails, notify them
             else {
-                alert('Failed to Create Task. Please check that your date is a valid one.');
+                alert('Failed to update Task. Please check that your date is a valid one.');
             }
         }
         // If no content exists when posting, alert them to fill it out first
         else if (date_is_valid_format===false) {
-            alert('Please make sure you enter the due date in the proper DD/MM/YYYY Format');
+            alert('Please make sure you enter the due date in the proper MM/DD/YYYY Format');
         }
         else {
             alert('Please ensure all required fields have content existing prior to making an update!');
