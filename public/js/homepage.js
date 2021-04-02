@@ -359,9 +359,11 @@
 
         // Get the value of the comment from that modal div using qS scoped to comment modal
         const comment = commentModal.querySelector('.new-comment').value.trim();
+            console.log(comment);
 
         // Get the task id the comment is for
         const task_id = commentModal.getAttribute('data-task-id');
+            console.log(task_id)
 
         // If content exists, Put it to the server...
         if (comment && task_id) {
@@ -376,7 +378,7 @@
             // If its an ok response load the latest dash again
             if (response.ok) {
                 alert('Comment Posted!');
-                document.location.replace('/');
+                location.reload();
             }
             // If it fails, notify them
             else {

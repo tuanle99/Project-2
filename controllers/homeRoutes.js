@@ -51,7 +51,6 @@ router.get('/', withAuth, async (req, res) => {
 
     const users = userData.map((user) => user.get({ plain: true }));
     const projects = projectDate.map((project) => project.get({ plain: true }));
-    console.log(tasks[0]);
 
     // Pass serialized data and session flag into db
     res.render('homepage', {
