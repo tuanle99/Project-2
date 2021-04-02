@@ -87,17 +87,15 @@
                 data-bs-target="#edit-modal-{{budget.id}}">
                 <i class="fas fa-pencil-alt"></i>
             </button>
-
-
             <div class="modal fade mt-5" id="edit-modal-{{budget.id}}" data-budget-id="{{budget.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content" data-created-by-user='InputSessionUserPlaceholder'>
-                        <form class="p-2">
+                        <form class="p-2"> 
                             <div class="mb-3">
                                 <label for="budget-name" class="form-label fw-bolder">Expense Title </label>
-                                <input type="text" class="form-control new-budget-title updated-budget-title"
-                                    placeholder="Enter Expense Title" value="{{budget.title}}"> 
+                                <input type="text" class="form-control new-budget-title updated-budget-category"
+                                    placeholder="Enter Expense Title" value="{{budget.category}}"> 
                             </div>
                             <div class="mb-3">
                                 <label for="budgetinput" class="form-label fw-bolder">Expense Frequency</label>
