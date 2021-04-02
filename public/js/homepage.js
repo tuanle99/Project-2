@@ -188,7 +188,7 @@
             });
             // If its an ok response refresh and load homepage again with new task
             if (response.ok) {
-                document.location.replace('/');
+                location.reload();
             }
             // If it fails, notify them
             else {
@@ -221,7 +221,7 @@
             });
             // If its an ok response refresh and load homepage again with new task
             if (response.ok) {
-                document.location.replace('/');
+                location.reload();
             }
             // If it fails, notify them
             else {

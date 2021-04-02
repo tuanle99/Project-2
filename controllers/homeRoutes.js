@@ -29,23 +29,26 @@ router.get('/', withAuth, async (req, res) => {
         },
         {
           model: Comment,
+          include: [
+            {
+              model: User,
+            },
+          ],
         },
       ],
     });
-
-    // This wasnt working so I will come back to it as a separate kanban issue- rj
-    // const currentUser = await User.findOne({
-    //   where:{id:req.session.user_id}
-    // });
 
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
     const projectDate = await Project.findAll();
 
     // Serialize data so the template can read it
+
     const tasks = taskData.map((task) => task.get({ plain: true }));
+
     const users = userData.map((user) => user.get({ plain: true }));
     const projects = projectDate.map((project) => project.get({ plain: true }));
+    console.log(tasks[0]);
 
     // Pass serialized data and session flag into db
     res.render('homepage', {
@@ -53,7 +56,6 @@ router.get('/', withAuth, async (req, res) => {
       users,
       projects,
       logged_in: req.session.logged_in,
-      // currentUser
     });
   } catch (err) {
     res.status(500).json(err);
