@@ -38,7 +38,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         });
 
         if (!commentData) {
-            res.status(404).json({ message: 'No blog found with this id!' });
+            res.status(404).json({ message: 'No task found with this id!' });
             return;
         }
 
