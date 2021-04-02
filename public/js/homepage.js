@@ -258,22 +258,22 @@
         // Get latest assignee (get their user id)
 
             // Get the select element by its id
-            const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
+            //const latestAssigneeSelectElement = editTaskModal.querySelector('.current-assignee');
 
             // Get the data attribute of the selected option within the options list
-            const user_assigned_id = latestAssigneeSelectElement.value.trim();
+            //const user_assigned_id = latestAssigneeSelectElement.value.trim();
         
 
         // Get the id for the task to delete
         const task_id = editTaskModal.getAttribute('data-task-id');
     
         // If content exists for all fields
-        if ((title && description && due_date && user_assigned_id) && (date_is_valid_format===true)) {
+        if ((title && description && due_date) && (date_is_valid_format===true)) {
 
             // Post the information to the server at route newTask
             const response = await fetch(`/api/tasks/${task_id}`, {
                 method: 'PUT',
-                body: JSON.stringify({ title, description, due_date, user_assigned_id }),
+                body: JSON.stringify({ title, description, due_date}),
                 headers: {
                     'Content-Type': 'application/JSON',
                 }
