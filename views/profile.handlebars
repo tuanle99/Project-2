@@ -60,7 +60,7 @@
 <div class="container">
   <div class="fluid-container">
     <div class="profile_title profile_background">
-      <h3 class="my-2">Welcome, {{current_user.dataValues.name}} !</h3>
+      <h3 class="my-3">Welcome, {{current_user.dataValues.name}} !</h3>
     </div>
     <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
       <h4 class="px-4"><i class="fas fa-user-friends"></i>  My Family</h4>
@@ -100,7 +100,7 @@
           <input readonly type="text" id={{task.id}} class="form-control task-input-field" value="{{task.title}}">
         </div>
         <div class="col-md-2 d-flex justify-content-center">
-          <span class="text-center d-flex justify-content-center">
+          <span class="text-center d-flex justify-content-center task-due-dates">
             {{format_date task.due_date}}
           </span>
         </div>
