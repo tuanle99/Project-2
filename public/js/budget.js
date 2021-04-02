@@ -40,7 +40,7 @@ const postNewExpense = async (event) => {
     }
 
     else {
-        alert('Please ensure you have entered informatoin in all fields before creating!');
+        alert('Please ensure you have entered information in all fields before creating!');
     }
 };
 
