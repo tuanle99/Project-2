@@ -70,7 +70,7 @@
     {{#if_not_eq user.dataValues.name current_user.dataValues.name}}
     <div class="row">
       <div class="col-6">
-        <p><i class="fas fa-male mx-2"></i><span class="fw-bold text-info">{{user.dataValues.role}}</span> | {{user.dataValues.name}}
+        <p><i class="fas fa-male mx-2 text-info"></i><span class="fw-bold">{{user.dataValues.role}}</span> <i class="fas fa-arrows-alt-h"></i> {{user.dataValues.name}}
           {{#if_not_eq user.dataValues.is_admin 0}}
           (admin)
           {{/if_not_eq}}
