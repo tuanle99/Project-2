@@ -63,7 +63,7 @@
       <h3 class="my-3">Welcome, {{current_user.dataValues.name}} !</h3>
     </div>
     <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
-      <h4 class="px-4"><i class="fas fa-user-friends"></i>  My Family</h4>
+      <h4 class="px-4"><i class="fas fa-user-friends me-3"></i>My Family</h4>
     </div>
     {{#each users as |user|}}
     {{!-- get all family member except for the user themselves --}}
@@ -81,7 +81,7 @@
     {{/each}}
     <div class="profile_background">
       <div class="row align-items-center shadow-sm my-2 fw-bold py-3 bg-light">
-        <h4><i class="fas fa-tasks"></i>  My Tasks</h4>
+        <h4><i class="fas fa-tasks me-3"></i>My Tasks</h4>
       </div>
       {{#each tasks as |task|}}
 
