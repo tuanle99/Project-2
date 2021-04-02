@@ -28,12 +28,16 @@ router.get('/', withAuth, async (req, res) => {
 
     const projects = await Project.findAll();
 
+    // Set active state for navbar
+    let isProfile = true;
+
     //need current user
     res.render('profile', {
       current_user,
       tasks,
       users,
       projects,
+      isProfile,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

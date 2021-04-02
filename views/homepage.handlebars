@@ -189,19 +189,7 @@
                                             Please enter your date in format MM / DD / YYYY
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="currentAssignee{{task.id}}"
-                                            class="updated-task-assignee form-label fw-bolder">Assignee</label>
-                                        <div>
-                                            <select id="currentAssignee{{task.id}}"
-                                                class="form-select current-assignee">
-                                                <option value="{{task.user.id}}">{{task.dataValues.user.name}}</option>
-                                                {{#users}}
-                                                <option value="{{task.user.id}}">{{user.name}}</option>
-                                                {{/users}}
-                                            </select>
-                                        </div>
-                                    </div>
+                                   
                                 </form>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
