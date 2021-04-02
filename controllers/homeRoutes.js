@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 const router = require('express').Router();
 const { User, Task, Project, Comment, Finance } = require('../models');
-// const withAuth = require("../utils/auth");
+const withAuth = require("../utils/auth");
 
 /* -------------------------------------------------------------------------- */
 /*                                Define Routes                               */
@@ -15,7 +15,7 @@ const { User, Task, Project, Comment, Finance } = require('../models');
 
 // Route to render home page with latest task data
 // First time site visit with no prior login return dash_home with no create / edit options
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     // Get the data from the blogs DB
     const taskData = await Task.findAll({
@@ -80,7 +80,7 @@ router.get('/', async (req, res) => {
     }
   });
 */
-router.get('/finance', (req, res) => {
+router.get('/finance', withAuth, (req, res) => {
   let dataArr = [];
   Finance.findAll({}).then((result) => {
     console.log(result[0].dataValues);

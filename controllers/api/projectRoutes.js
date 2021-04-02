@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { User, Task, Comment, Project } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     const current_user = await User.findOne({
       where: { id: req.session.user_id },

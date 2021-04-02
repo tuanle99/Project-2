@@ -5,7 +5,7 @@ const withAuth = require('../../utils/auth');
 
 // Render profile page
 // Need update to current user after log in
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
 
     try {
         // Get the budget data so we can populate that on the Budget page
