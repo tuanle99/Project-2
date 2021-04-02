@@ -15,9 +15,13 @@ router.get('/', withAuth, async (req, res) => {
         const budgets = budgetData.map((budget) => budget.get({ plain: true }));
         console.log(budgets);
 
+        // Set active state for navbar
+        let isFinance = true;
+
         // Pass serialized data and session flag into db
         res.render('budget', {
             budgets,
+            isFinance,
             logged_in: req.session.logged_in
         });
     }

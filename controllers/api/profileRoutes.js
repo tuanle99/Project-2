@@ -24,7 +24,8 @@ router.get('/', withAuth, async (req, res) => {
 
     const projects = await Project.findAll();
 
-    console.log(current_user);
+    // Set active state for navbar
+    let isProfile = true;
 
     //need current user
     res.render('profile', {
@@ -32,6 +33,7 @@ router.get('/', withAuth, async (req, res) => {
       tasks,
       users,
       projects,
+      isProfile,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

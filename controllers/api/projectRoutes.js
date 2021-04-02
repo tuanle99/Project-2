@@ -34,10 +34,14 @@ router.get('/', withAuth, async (req, res) => {
     // Serialize data so the template can read it
     const users = userData.map((user) => user.get({ plain: true }));
 
+    // Set active state for navbar
+    let isProject = true;
+
     res.render('project', {
       logged_in: req.session.logged_in,
       projects,
       users,
+      isProject,
       current_user,
     });
   } catch (err) {

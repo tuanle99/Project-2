@@ -38,6 +38,9 @@ router.get('/', withAuth, async (req, res) => {
       ],
     });
 
+    // Set active state for navbar
+    let isHome = true;
+
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
     const projectDate = await Project.findAll();
@@ -55,6 +58,7 @@ router.get('/', withAuth, async (req, res) => {
       tasks,
       users,
       projects,
+      isHome,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

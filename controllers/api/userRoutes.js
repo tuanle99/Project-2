@@ -13,11 +13,16 @@ const withAuth = require('../../utils/auth');
 
 /* ------------------------------- Get Routes ------------------------------- */
 // Brings up the login page if user clicks login in nav
+
+// Set active state for navbar
 router.get('/login', async (req, res) => {
     try {
+        // Set active state for navbar
+        let isLogin = true;
         // Render the login screen and the status if they are logged in
         res.render('login', {
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            isLogin
         });
     }
     catch (err) {
@@ -26,11 +31,16 @@ router.get('/login', async (req, res) => {
 })
 
 // Brings up the signup page if user clicks they need to create new crednetials on login page
+// Set active state for navbar
+
 router.get('/signup', async (req, res) => {
     try {
+        // Set active state for navbar
+        let isLogin = true;
         // Render the login screen and the status if they are logged in
         res.render('signup', {
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            isLogin
         });
     }
     catch (err) {
