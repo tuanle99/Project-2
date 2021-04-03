@@ -14,6 +14,7 @@ Task.belongsTo(User, {
 
 User.hasMany(Task, {
   foreignKey: 'user_assigned_id',
+  onDelete: 'CASCADE',
 });
 
 // Project / User relationships
@@ -23,6 +24,7 @@ Project.belongsTo(User, {
 
 User.hasMany(Project, {
   foreignKey: 'user_id',
+  onDelete: 'CASCADE',
 });
 
 // Project / Task relationships
