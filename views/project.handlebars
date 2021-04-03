@@ -241,7 +241,7 @@
                             <ul>
 
                                 {{#each task.dataValues.comments as |comment|}}
-                                <li>{{comment.comment}} -- User {{comment.user_id}}</li>
+                                <li>{{comment.comment}} - {{comment.user.name}}</li>
                                 {{/each}}
 
                             </ul>
