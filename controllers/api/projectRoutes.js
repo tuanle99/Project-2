@@ -13,7 +13,7 @@ router.get('/', withAuth, async (req, res) => {
           model: Task,
           include: [
             {
-              model: User
+              model: User,
             },
             {
               model: Comment,
@@ -33,12 +33,15 @@ router.get('/', withAuth, async (req, res) => {
 
     // Get the user data so I can populate the new task assignee selections
     const userData = await User.findAll();
-    
+
     // Serialize data so the template can read it
     const users = userData.map((user) => user.get({ plain: true }));
+    // const projects = projectData.map((project) => project.get({ plain: true }));
 
     // Set active state for navbar
     let isProject = true;
+
+    console.log(projects[0].dataValues.tasks[0].dataValues.comments);
 
     res.render('project', {
       logged_in: req.session.logged_in,
